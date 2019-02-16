@@ -22,11 +22,9 @@ public class MainActivity extends AppCompatActivity {
         itemName = (TextView) findViewById(R.id.itemName);
         itemName.setText(item.getItem());
 
-        //starting price
+        //init  startingPrice, currentPrice, and priceChange
         startingPrice = (TextView) findViewById(R.id.startingPrice);
-
         currentPrice = (TextView) findViewById(R.id.currentPrice);
-
         priceChange = (TextView) findViewById(R.id.percent);
 
 
@@ -36,10 +34,13 @@ public class MainActivity extends AppCompatActivity {
         startingPrice.setText(Double.toString(start));
 
         calButton.setOnClickListener(v -> {
-            item.updatePrice();
-            currentPrice.setText(Double.toString(item.getCurrentPrice()));
-            priceChange.setText(Double.toString(item.getPercentageChange()));
-
+            settingNumbers();
         });
+    }
+
+    public void settingNumbers(){
+        item.updatePrice();
+        currentPrice.setText(Double.toString(item.getCurrentPrice()));
+        priceChange.setText(Double.toString(item.getPercentageChange()));
     }
 }
