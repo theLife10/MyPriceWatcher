@@ -4,5 +4,6 @@
     <string name="initalPrice">Starting Price: </string>
     <string name="currentPrice">Current Price</string>
     <string name="percent">Percentage Change</string>
-    <string name="but">Button</string>
+    <string name="but">Update</string>
+    <string name="launch">Launch</string>
 </resources>
