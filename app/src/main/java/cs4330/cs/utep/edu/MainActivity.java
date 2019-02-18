@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchWebsite(){
-        String url = "https://www.bestbuy.com/site/dell-23-8-touch-screen-all-in-one-amd-a9-series-8gb-memory-1tb-hard-drive-black/6196009.p?skuId=6196009";
+        PriceFinder find = new PriceFinder();
+        String url = find.getUrl();
         Uri website = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, website);
         if (intent.resolveActivity(getPackageManager()) != null) {
