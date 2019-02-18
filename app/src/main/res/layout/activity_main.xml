@@ -89,7 +89,9 @@
         <TextView
             android:id="@+id/link"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:linksClickable="true"/>
 
     </LinearLayout>
 
@@ -103,12 +105,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/but"/>
-        <Button
-            android:id="@+id/launch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/launch"/>
-
 
     </LinearLayout>
 

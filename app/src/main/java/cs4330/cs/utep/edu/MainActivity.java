@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         calButton = (Button) findViewById(R.id.cal);
-        launch = (Button) findViewById(R.id.launch);
+
 
         item.setStartPrice();
         double start = item.getStartPrice();
@@ -45,14 +45,11 @@ public class MainActivity extends AppCompatActivity {
             settingNumbers();
         });
 
-        launch.setOnClickListener(v -> {
-            launchWebsite(url);
-        });
 
         //checking if link passed
-
         linkPassed = (TextView) findViewById(R.id.link);
-
+        url= "www.bestbuy.com";
+        linkPassed.setText(url);
         String action = getIntent().getAction();
         String type =getIntent().getType();
         if(Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
