@@ -6,7 +6,14 @@ public class Item {
     private String mItem;
     private double mStartPrice;
     private double mCurrentPrice;
+    private PriceFinder findPrice;
 
+    public Item(){
+        mItem = "Laptop";
+        findPrice = new PriceFinder();
+        mStartPrice = 0.00;
+        mCurrentPrice = 0.00;
+    }
 
     public double getStartPrice() {
         return mStartPrice;
@@ -16,16 +23,14 @@ public class Item {
         return mCurrentPrice;
     }
 
-    public void updatePrice(){
-        mCurrentPrice = mCurrentPrice + 5;
+    public void setStartPrice() {
+        mStartPrice = findPrice.generateRandomPrices();
     }
 
-
-    public Item(){
-        mItem = "Laptop";
-        mCurrentPrice = 100.00;
-        mStartPrice = 100.00;
+    public void setCurrentPrice(){
+        mCurrentPrice = findPrice.generateRandomPrices();
     }
+
 
     public void setItem(String item) {
         mItem = item;
@@ -35,10 +40,8 @@ public class Item {
         return mItem;
     }
 
-
-
     public double getPercentageChange(){
-        return mCurrentPrice - mStartPrice;
+        return mStartPrice - mCurrentPrice;
     }
 
 }

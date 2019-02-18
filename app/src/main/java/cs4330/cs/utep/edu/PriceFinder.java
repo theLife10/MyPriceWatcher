@@ -1,16 +1,19 @@
 package cs4330.cs.utep.edu;
 
+import java.util.Random;
+
 public class PriceFinder {
-    private String mUrl;
+    private double price;
 
     public PriceFinder(){
-        mUrl = "https://www.bestbuy.com/site/dell-23-8-touch-screen-all-in-one-amd-a9-series-8gb-memory-1tb-hard-drive-black/6196009.p?skuId=6196009";
+        price = 0.00;
     }
 
-    public void setUrl(String url){
-        this.mUrl = url;
+    public double generateRandomPrices(){
+        Random r = new Random();
+        price = (r.nextInt((int)((500-50)*10+1))+50*10) / 10.0;
+        return price;
     }
-    public String getUrl(){
-        return mUrl;
-    }
+
+
 }

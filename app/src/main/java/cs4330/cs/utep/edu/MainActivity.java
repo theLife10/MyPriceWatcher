@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     Button calButton;
     Button launch;
     Item item = new Item();
+    String url ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         calButton = (Button) findViewById(R.id.cal);
         launch = (Button) findViewById(R.id.launch);
 
+        item.setStartPrice();
         double start = item.getStartPrice();
         startingPrice.setText(Double.toString(start));
 
@@ -43,28 +46,29 @@ public class MainActivity extends AppCompatActivity {
         });
 
         launch.setOnClickListener(v -> {
-            launchWebsite();
+            launchWebsite(url);
         });
 
         //checking if link passed
+
         linkPassed = (TextView) findViewById(R.id.link);
+
         String action = getIntent().getAction();
         String type =getIntent().getType();
         if(Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
-            String url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
             linkPassed.setText(url);
         }
     }
 
     public void settingNumbers(){
-        item.updatePrice();
+        item.setCurrentPrice();
         currentPrice.setText(Double.toString(item.getCurrentPrice()));
         priceChange.setText(Double.toString(item.getPercentageChange()));
     }
 
-    public void launchWebsite(){
-        PriceFinder find = new PriceFinder();
-        String url = find.getUrl();
+    public void launchWebsite(String url){
+
         Uri website = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, website);
         if (intent.resolveActivity(getPackageManager()) != null) {

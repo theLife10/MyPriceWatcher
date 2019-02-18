@@ -5,6 +5,6 @@
     <string name="currentPrice">Current Price: </string>
     <string name="change">Change: </string>
     <string name="but">Update</string>
-    <string name="launch">Launch</string>
+    <string name="launch">Launch To Website</string>
     <string name="linkpassed">Linked Passed: </string>
 </resources>
