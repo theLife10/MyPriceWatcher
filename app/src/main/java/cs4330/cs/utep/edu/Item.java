@@ -6,7 +6,7 @@ public class Item {
     private String mItem;
     private double mStartPrice;
     private double mCurrentPrice;
-    private String url;
+
 
     public double getStartPrice() {
         return mStartPrice;
