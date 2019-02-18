@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     TextView currentPrice;
     TextView startingPrice;
     TextView priceChange;
+    TextView linkPassed;
     Button calButton;
     Button launch;
     Item item = new Item();
@@ -45,7 +46,14 @@ public class MainActivity extends AppCompatActivity {
             launchWebsite();
         });
 
-
+        //checking if link passed
+        linkPassed = (TextView) findViewById(R.id.link);
+        String action = getIntent().getAction();
+        String type =getIntent().getType();
+        if(Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
+            String url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            linkPassed.setText(url);
+        }
     }
 
     public void settingNumbers(){

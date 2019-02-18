@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">My Price Watcher</string>
-    <string name="itemName">Item:</string>
+    <string name="itemName">Item: </string>
     <string name="initalPrice">Starting Price: </string>
-    <string name="currentPrice">Current Price</string>
-    <string name="percent">Percentage Change</string>
+    <string name="currentPrice">Current Price: </string>
+    <string name="change">Change: </string>
     <string name="but">Update</string>
     <string name="launch">Launch</string>
+    <string name="linkpassed">Linked Passed: </string>
 </resources>

@@ -38,7 +38,7 @@ public class Item {
 
 
     public double getPercentageChange(){
-        return Math.abs(mCurrentPrice - mStartPrice);
+        return mCurrentPrice - mStartPrice;
     }
 
 }
