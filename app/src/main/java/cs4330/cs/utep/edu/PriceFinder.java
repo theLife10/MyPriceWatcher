@@ -14,6 +14,4 @@ public class PriceFinder {
         price = (r.nextInt((int)((500-50)*10+1))+50*10) / 10.0;
         return price;
     }
-
-
 }

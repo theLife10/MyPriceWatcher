@@ -31,7 +31,6 @@ public class Item {
         mCurrentPrice = findPrice.generateRandomPrices();
     }
 
-
     public void setItem(String item) {
         mItem = item;
     }

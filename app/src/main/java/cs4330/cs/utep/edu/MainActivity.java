@@ -9,13 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    TextView itemName;
-    TextView currentPrice;
-    TextView startingPrice;
-    TextView priceChange;
-    TextView linkPassed;
-    Button calButton;
-    Button launch;
+    TextView itemName,currentPrice,startingPrice,priceChange,linkPassed;
+    Button calButton,launch;
     Item item = new Item();
     String url ;
 
@@ -62,14 +57,5 @@ public class MainActivity extends AppCompatActivity {
         item.setCurrentPrice();
         currentPrice.setText(Double.toString(item.getCurrentPrice()));
         priceChange.setText(Double.toString(item.getPercentageChange()));
-    }
-
-    public void launchWebsite(String url){
-
-        Uri website = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, website);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
     }
 }
