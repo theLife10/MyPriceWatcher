@@ -4,31 +4,31 @@ public class Item {
 
 
     private String mItem;
-    private double mStartPrice;
-    private double mCurrentPrice;
+    private float mStartPrice;
+    private float mCurrentPrice;
     private PriceFinder findPrice;
 
     public Item(){
         mItem = "Laptop";
         findPrice = new PriceFinder();
-        mStartPrice = 0.00;
-        mCurrentPrice = 0.00;
+        mStartPrice = (float) 0.00;
+        mCurrentPrice = (float) 0.00;
     }
 
-    public double getStartPrice() {
+    public float getStartPrice() {
         return mStartPrice;
     }
 
-    public double getCurrentPrice() {
+    public float getCurrentPrice() {
         return mCurrentPrice;
     }
 
     public void setStartPrice() {
-        mStartPrice = findPrice.generateRandomPrices();
+        mStartPrice = findPrice.findPrice();
     }
 
     public void setCurrentPrice(){
-        mCurrentPrice = findPrice.generateRandomPrices();
+        mCurrentPrice = findPrice.findPrice();
     }
 
     public void setItem(String item) {
@@ -39,7 +39,7 @@ public class Item {
         return mItem;
     }
 
-    public double getPercentageChange(){
+    public float getPercentageChange(){
         return mStartPrice - mCurrentPrice;
     }
 
