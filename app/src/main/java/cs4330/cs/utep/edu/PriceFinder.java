@@ -3,7 +3,7 @@ package cs4330.cs.utep.edu;
 import java.util.Random;
 
 public class PriceFinder {
-    private String url;
+
     public float findPrice(){
         double price = 0.00;
         Random r = new Random();
