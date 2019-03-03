@@ -39,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
             settingNumbers();
         });
 
+        passLine();
 
+    }
+
+    private void passLine() {
         //checking if link passed
         linkPassed = (TextView) findViewById(R.id.link);
         url= "https://www.bestbuy.com/site/hp-15-6-laptop-amd-a6-series-4gb-memory-amd-radeon-r4-1tb-hard-drive-hp-finish-in-jet-black-with-a-maglia-texture/6240847.p?skuId=6240847&ref=212&loc=1&extStoreId=829&&ref=212&loc=DWA&gclid=CjwKCAiAkrTjBRAoEiwAXpf9CdXpa-p-0dHJhsHKlwDe4ak88E_oh7RZ1hdiAvokxuCcUKe9vofArRoCQYAQAvD_BwE&gclsrc=aw.ds";
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void settingNumbers(){
         item.setCurrentPrice();
+        //format the strings
         currentPrice.setText(Float.toString(item.getCurrentPrice()));
         priceChange.setText(Float.toString(item.getPercentageChange()));
     }
