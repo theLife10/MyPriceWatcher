@@ -1,20 +1,24 @@
 package cs4330.cs.utep.edu;
 
 
+
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ListView listview;
     ItemAdapter adapter;
+    TextView linkPassed;
    // Button calButton;
-   // private ListView listview;
 
-    //Item item = new Item();
+    Item item = new Item();
     String url ;
 
 
@@ -37,23 +41,22 @@ public class MainActivity extends AppCompatActivity {
             //settingNumbers();
   //      });
 
-        //passLine();
+
 
         adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
 
     }
 
-   // private void passLine() {
+    private void passLine(View listItem) {
         //checking if link passed
-       // linkPassed = (TextView) findViewById(R.id.link);
-     //   url= "https://www.bestbuy.com/site/hp-15-6-laptop-amd-a6-series-4gb-memory-amd-radeon-r4-1tb-hard-drive-hp-finish-in-jet-black-with-a-maglia-texture/6240847.p?skuId=6240847&ref=212&loc=1&extStoreId=829&&ref=212&loc=DWA&gclid=CjwKCAiAkrTjBRAoEiwAXpf9CdXpa-p-0dHJhsHKlwDe4ak88E_oh7RZ1hdiAvokxuCcUKe9vofArRoCQYAQAvD_BwE&gclsrc=aw.ds";
-       // linkPassed.setText(url);
-       // String action = getIntent().getAction();
-        //String type =getIntent().getType();
-        //if(Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
-          //  url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-           // linkPassed.setText(url);
-        //}
-    //}
+        String action = getIntent().getAction();
+        String type =getIntent().getType();
+        if(Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
+            url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            linkPassed.setText(url);
+        }
+    }
+
+
 }

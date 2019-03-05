@@ -1,12 +1,14 @@
 package cs4330.cs.utep.edu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.content.Intent;
 
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
-    TextView itemName, currentPrice, startingPrice,priceChange;
+    TextView itemName, currentPrice, startingPrice,priceChange,linkPassed;
     public ItemAdapter( Context context, List<Item> items){
         super(context, 0, items);
         mContext = context;
@@ -43,12 +45,15 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         currentPrice = (TextView) listItem.findViewById(R.id.currentPrice);
         currentPrice.setText(Double.toString(item.getCurrentPrice()));
 
+        linkPassed = (TextView) listItem.findViewById(R.id.link);
+        linkPassed.setText(item.getUrl());
+
         //init  startingPrice, currentPrice, and priceChange
 
 
        // priceChange = (TextView) listItem.findViewById(R.id.percent);
 
-
+      //  passLine(listItem);
        // settingNumbers();
        return  listItem;
     }
@@ -59,4 +64,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         //currentPrice.setText(Float.toString(item.getCurrentPrice()));
       //  priceChange.setText(Float.toString(item.getPercentageChange()));
    // }
+
+
+
 }
