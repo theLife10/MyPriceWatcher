@@ -7,106 +7,11 @@
     android:orientation="vertical"
     >
 
-   <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal">
-       <TextView
-       android:id="@+id/itemText"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="@string/itemName" />
-
-       <TextView
-           android:id="@+id/itemName"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-            />
-
-   </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/startingPriceText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/initalPrice" />
-
-        <TextView
-            android:id="@+id/startingPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/currentPriceText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/currentPrice" />
-
-        <TextView
-            android:id="@+id/currentPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/percentText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/change" />
-
-        <TextView
-            android:id="@+id/percent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/linktext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/linkpassed" />
-
-        <TextView
-            android:id="@+id/link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:linksClickable="true"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/cal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/but"/>
-
-    </LinearLayout>
+   <ListView
+       android:id="@+id/listview"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+   </ListView>
 
 
 </LinearLayout>
