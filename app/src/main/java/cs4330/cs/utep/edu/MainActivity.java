@@ -5,11 +5,14 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     TextView itemName,currentPrice,startingPrice,priceChange,linkPassed;
     Button calButton;
+    private ListView listview;
+    private ItemAdapter itemadapter;
     Item item = new Item();
     String url ;
 
@@ -18,14 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //setting item name
-        itemName = (TextView) findViewById(R.id.itemName);
-        itemName.setText(item.getItem());
-
-        //init  startingPrice, currentPrice, and priceChange
-        startingPrice = (TextView) findViewById(R.id.startingPrice);
-        currentPrice = (TextView) findViewById(R.id.currentPrice);
-        priceChange = (TextView) findViewById(R.id.percent);
+        listview = (ListView) findViewById(R.id.listview);
 
 
         calButton = (Button) findViewById(R.id.cal);
