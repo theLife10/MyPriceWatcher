@@ -95,20 +95,6 @@
             android:linksClickable="true"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/cal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/but"/>
-    </LinearLayout>
-
-
-
 
 </LinearLayout>
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/add"
+        android:orderInCategory="100"
+        android:title="Add"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/update"
+        android:orderInCategory="90"
+        android:title="Update"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/remove"
+        android:orderInCategory="30"
+        android:title="Remove" />
+
+    <item
+        android:id="@+id/edit"
+        android:orderInCategory="20"
+        android:title="Edit" />
+
+</menu>

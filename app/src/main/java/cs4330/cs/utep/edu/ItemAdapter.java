@@ -35,6 +35,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         item = itemList.get(position);
         item.setStartPrice();
+        item.setCurrentPrice();
 
 
         //setting item name
