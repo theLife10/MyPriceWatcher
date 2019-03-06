@@ -16,12 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listview;
     ItemAdapter adapter;
     TextView linkPassed;
-   // Button calButton;
-
-    Item item = new Item();
-    String url ;
-
-
+    String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,29 +29,21 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new Item());
         items.add(new Item());
-        //calButton = (Button) findViewById(R.id.cal);
 
-
-//        calButton.setOnClickListener(v -> {
-            //settingNumbers();
-  //      });
-
-
-
+        //passLine();
         adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
 
     }
 
-    private void passLine(View listItem) {
+    private void passLine() {
         //checking if link passed
         String action = getIntent().getAction();
-        String type =getIntent().getType();
-        if(Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
+        String type = getIntent().getType();
+        if (Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
             url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
             linkPassed.setText(url);
         }
+
     }
-
-
 }

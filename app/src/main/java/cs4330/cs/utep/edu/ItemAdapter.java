@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
-import android.content.Intent;
-
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
-    TextView itemName, currentPrice, startingPrice,priceChange,linkPassed;
+    TextView itemName, currentPrice, startingPrice,priceChange,linkPassed, calButton;
+    Item item;
     public ItemAdapter( Context context, List<Item> items){
         super(context, 0, items);
         mContext = context;
@@ -32,8 +33,9 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             listItem = LayoutInflater.from(mContext).inflate(R.layout.listview_row,parent,false);
         }
 
-        Item item = itemList.get(position);
+        item = itemList.get(position);
         item.setStartPrice();
+
 
         //setting item name
         itemName = (TextView) listItem.findViewById(R.id.itemName);
@@ -45,26 +47,22 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         currentPrice = (TextView) listItem.findViewById(R.id.currentPrice);
         currentPrice.setText(Double.toString(item.getCurrentPrice()));
 
+        priceChange = (TextView) listItem.findViewById(R.id.percent);
+
+
         linkPassed = (TextView) listItem.findViewById(R.id.link);
         linkPassed.setText(item.getUrl());
 
-        //init  startingPrice, currentPrice, and priceChange
 
-
-       // priceChange = (TextView) listItem.findViewById(R.id.percent);
-
-      //  passLine(listItem);
-       // settingNumbers();
        return  listItem;
     }
 
-   // public void settingNumbers(){
-      //  item.setCurrentPrice();
-//        format the strings
-        //currentPrice.setText(Float.toString(item.getCurrentPrice()));
-      //  priceChange.setText(Float.toString(item.getPercentageChange()));
-   // }
+    public void settingNumbers(Item item){
+        //item.setCurrentPrice();
+       // currentPrice.setText(Float.toString(item.getCurrentPrice()));
+       // priceChange.setText(Float.toString(item.getPercentageChange()));
 
+    }
 
 
 }
