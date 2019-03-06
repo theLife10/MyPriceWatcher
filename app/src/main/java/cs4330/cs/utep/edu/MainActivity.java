@@ -42,11 +42,10 @@ public class MainActivity extends AppCompatActivity {
         listview.setAdapter(adapter);
             if(id == R.id.add){
                 items.add(new Item());
-
-                Toast.makeText(this,"add",Toast.LENGTH_SHORT).show();
                 return true;
             }
             if(id == R.id.update){
+
                 Toast.makeText(this,"update",Toast.LENGTH_SHORT).show();
                 return true;
             }

@@ -59,9 +59,9 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     }
 
     public void settingNumbers(Item item){
-        //item.setCurrentPrice();
-       // currentPrice.setText(Float.toString(item.getCurrentPrice()));
-       // priceChange.setText(Float.toString(item.getPercentageChange()));
+        item.setCurrentPrice();
+        currentPrice.setText(Float.toString(item.getCurrentPrice()));
+        priceChange.setText(Float.toString(item.getPercentageChange()));
 
     }
 
