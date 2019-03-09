@@ -7,19 +7,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ListView listview;
     ItemAdapter adapter;
     TextView linkPassed;
     String url;
-    ArrayList<Item> items = new ArrayList<>();
+    List<Item> items = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listview = (ListView) findViewById(R.id.listview);
+
+        adapter = new ItemAdapter(this,items);
+        listview.setAdapter(adapter);
+
 
 
     }
@@ -38,15 +45,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        adapter = new ItemAdapter(this, items);
-        listview.setAdapter(adapter);
+
             if(id == R.id.add){
                 items.add(new Item());
+                adapter.notifyDataSetChanged();
                 return true;
             }
             if(id == R.id.update){
-
-                Toast.makeText(this,"update",Toast.LENGTH_SHORT).show();
+              //  adapter.setPercent();
+               // adapter.notifyDataSetChanged();
+              //  Toast.makeText(this,"update",Toast.LENGTH_SHORT).show();
                 return true;
             }
 
