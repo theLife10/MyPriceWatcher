@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
 
-
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

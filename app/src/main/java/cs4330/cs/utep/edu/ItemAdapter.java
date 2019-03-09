@@ -19,8 +19,9 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
-    TextView itemName, currentPrice, priceChange,linkPassed, percent;
+    TextView itemName, currentPrice, priceChange,linkPassed;
     TextView startingPrice;
+    Button b;
     Item item;
     public ItemAdapter( Context context, List<Item> items){
         super(context, 0, items);
@@ -38,6 +39,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             startingPrice = (TextView) listItem.findViewById(R.id.startingPrice);
             currentPrice = (TextView) listItem.findViewById(R.id.currentPrice);
             priceChange = (TextView) listItem.findViewById(R.id.percent);
+            b = (Button) listItem.findViewById(R.id.popup);
         }
 
         item = itemList.get(position);
@@ -50,8 +52,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         linkPassed.setText(item.getUrl());
 
-        listItem.setOnClickListener( v -> {
-            Toast.makeText(getContext(),"pressed",Toast.LENGTH_SHORT);
+        b.setOnClickListener(v -> {
+            Toast.makeText(getContext(),"pressed",Toast.LENGTH_SHORT).show();
         });
 
        return  listItem;
