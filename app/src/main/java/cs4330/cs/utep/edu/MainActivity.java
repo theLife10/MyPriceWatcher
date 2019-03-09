@@ -34,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
 
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(getApplicationContext(), "pressed", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
