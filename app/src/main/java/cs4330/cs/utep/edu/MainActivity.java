@@ -30,20 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listview = (ListView) findViewById(R.id.listview);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(getApplicationContext(), "pressed", Toast.LENGTH_LONG).show();
-
-            }
-        });
-
         adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
-
-
 
     }
     @Override
@@ -77,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         String type = getIntent().getType();
         if (Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
             url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            //send to dialog
             linkPassed.setText(url);
         }
 

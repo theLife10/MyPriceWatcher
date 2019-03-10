@@ -1,21 +1,17 @@
 package cs4330.cs.utep.edu;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuItemClickListener {
 
@@ -23,7 +19,7 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
     private List<Item> itemList = new ArrayList<>();
     TextView itemName, currentPrice, priceChange,linkPassed;
     TextView startingPrice;
-    Button b;
+
     Item item;
     public ItemAdapter( Context context, List<Item> items){
         super(context, 0, items);
@@ -41,7 +37,6 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
             startingPrice = (TextView) listItem.findViewById(R.id.startingPrice);
             currentPrice = (TextView) listItem.findViewById(R.id.currentPrice);
             priceChange = (TextView) listItem.findViewById(R.id.percent);
-            b = (Button) listItem.findViewById(R.id.popup);
         }
 
         item = itemList.get(position);
