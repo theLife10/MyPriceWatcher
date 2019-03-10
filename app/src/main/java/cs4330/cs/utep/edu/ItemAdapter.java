@@ -54,7 +54,7 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
 
         linkPassed.setText(item.getUrl());
 
-        b.setOnClickListener(v -> {
+        listItem.setOnClickListener(v -> {
             popup(v);
         });
 

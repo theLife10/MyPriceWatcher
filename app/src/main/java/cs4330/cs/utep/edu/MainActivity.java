@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
         listview = (ListView) findViewById(R.id.listview);
 
-        adapter = new ItemAdapter(this,items);
-        listview.setAdapter(adapter);
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -42,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        adapter = new ItemAdapter(this,items);
+        listview.setAdapter(adapter);
+
+
 
     }
     @Override
