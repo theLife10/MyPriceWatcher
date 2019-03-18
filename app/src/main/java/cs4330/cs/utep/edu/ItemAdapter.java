@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
             popup(v);
         });
 
-       return  listItem;
+       return listItem;
     }
 
     private void popup(View v) {
@@ -64,14 +66,23 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
     }
     @Override
     public boolean onMenuItemClick(MenuItem item){
+        if(item.getItemId() == R.id.edit){
+           // createDialog();
+        }
         return false;
     }
 
+    private void createDialog(){
+       // openDialog();
+    }
     public void setPercent(){
       //  item.setCurrentPrice();
       //  currentPrice.setText(Float.toString(item.getCurrentPrice()));
       //  String var  = Float.toString(item.getPercentageChange());
       //  priceChange.setText(String.format(Locale.getDefault(),"$ %.0f",var));
+
+    }
+    private void openDialog(){
 
     }
 

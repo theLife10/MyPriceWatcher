@@ -7,14 +7,19 @@ public class Item {
     private float mStartPrice;
     private float mCurrentPrice;
     private PriceFinder findPrice;
-    private String url;
+    private String mUrl;
 
     public Item(){
         mItem = "Laptop";
         findPrice = new PriceFinder();
         mStartPrice = (float) 0.00;
         mCurrentPrice = (float) 0.00;
-        url = "www.google.com";
+        mUrl = "www.google.com";
+    }
+    public Item(String item, float startPrice,String url) {
+        mItem = item;
+        mStartPrice = startPrice;
+        mUrl = url;
     }
 
     public float getStartPrice() {
@@ -42,7 +47,7 @@ public class Item {
     }
 
     public String getUrl(){
-        return url;
+        return mUrl;
     }
 
     public float getPercentageChange(){

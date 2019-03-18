@@ -2,6 +2,7 @@ package cs4330.cs.utep.edu;
 
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listview;
     ItemAdapter adapter;
     TextView linkPassed;
+    EditText diaName,diaPrice,diaUrl;
     String url;
     List<Item> items = new ArrayList<>();
 
@@ -44,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
             if(id == R.id.add){
-                items.add(new Item());
-                adapter.notifyDataSetChanged();
+                addDialog();
+                //items.add(new Item());
+                //adapter.notifyDataSetChanged();
                 return true;
             }
             if(id == R.id.update){
@@ -69,5 +73,19 @@ public class MainActivity extends AppCompatActivity {
             linkPassed.setText(url);
         }
 
+    }
+    private void addDialog(){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.layout_dialog,null);
+
+        diaName = (EditText) mView.findViewById(R.id.diaItemName);
+        diaPrice =(EditText) mView.findViewById(R.id.diaStartingPrice);
+        diaUrl = (EditText) mView.findViewById(R.id.diaUrl);
+
+
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
     }
 }
