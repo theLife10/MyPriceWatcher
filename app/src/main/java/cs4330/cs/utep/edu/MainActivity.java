@@ -1,5 +1,6 @@
 package cs4330.cs.utep.edu;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -117,26 +118,11 @@ public class MainActivity extends AppCompatActivity {
     private void browse(){
         String url = "https://www.bestbuy.com";
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
-                .setToolbarColor(Color.BLUE);
-        //
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.getStringExtra(EXTRA_TEXT);
-        PendingIntent menuIntent = PendingIntent.getActivity(this, 0, shareIntent, 0);
-        builder.addMenuItem("Share via PriceWatcher", menuIntent);
-
-        //
-
-
-
-
-
-
-
+               .setToolbarColor(Color.BLUE)
+                .addDefaultShareMenuItem();
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(this, Uri.parse(url));
 
-
-
     }
+
 }
