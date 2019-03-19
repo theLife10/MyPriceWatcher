@@ -9,29 +9,30 @@ public class Item {
     private PriceFinder findPrice;
     private String mUrl;
 
+
     public Item(){
-        mItem = "Laptop";
+        mItem = "";
         findPrice = new PriceFinder();
         mStartPrice = (float) 0.00;
         mCurrentPrice = (float) 0.00;
-        mUrl = "www.google.com";
     }
     public Item(String item, float startPrice,String url) {
         mItem = item;
         mStartPrice = startPrice;
         mUrl = url;
+        findPrice = new PriceFinder();
     }
 
-    public float getStartPrice() {
+    public double getStartPrice() {
         return mStartPrice;
     }
 
-    public float getCurrentPrice() {
+    public double getCurrentPrice() {
         return mCurrentPrice;
     }
 
-    public void setStartPrice() {
-        mStartPrice = findPrice.findPrice();
+    public void setStartPrice(float start) {
+        mStartPrice = start;
     }
 
     public void setCurrentPrice(){
@@ -50,8 +51,8 @@ public class Item {
         return mUrl;
     }
 
-    public float getPercentageChange(){
-        return mStartPrice - mCurrentPrice;
+    public double getPercentageChange(){
+        return (mStartPrice - mCurrentPrice) / 100;
     }
 
 }

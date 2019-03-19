@@ -9,17 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DeflaterOutputStream;
 
 
 public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuItemClickListener {
 
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
-    TextView itemName, currentPrice, priceChange,linkPassed;
+    TextView itemName, currentPrice, priceChange;
     TextView startingPrice;
 
     Item item;
@@ -35,21 +34,24 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
         if(listItem == null){
             listItem = LayoutInflater.from(mContext).inflate(R.layout.listview_row,parent,false);
             itemName = (TextView) listItem.findViewById(R.id.itemName);
-            linkPassed = (TextView) listItem.findViewById(R.id.link);
             startingPrice = (TextView) listItem.findViewById(R.id.startingPrice);
             currentPrice = (TextView) listItem.findViewById(R.id.currentPrice);
             priceChange = (TextView) listItem.findViewById(R.id.percent);
         }
 
         item = itemList.get(position);
-
-
+        item.setCurrentPrice();
+        //setting the name
         itemName.setText(item.getItem());
-        item.setStartPrice();
-        String start =Double.toString(item.getStartPrice());
+        //Setting the starting price
+        String start = Double.toString(item.getStartPrice());
         startingPrice.setText(start);
-
-        linkPassed.setText(item.getUrl());
+        //Setting the current price
+        String dcurrentPrice = Float.toString((float) item.getCurrentPrice());
+        currentPrice.setText(dcurrentPrice);
+        //setting up percentage
+        String percentage = Float.toString((float) item.getPercentageChange());
+        priceChange.setText(percentage);
 
         listItem.setOnClickListener(v -> {
             popup(v);
