@@ -2,16 +2,22 @@ package cs4330.cs.utep.edu;
 
 import android.content.Context;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.DeflaterOutputStream;
+
 
 
 public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuItemClickListener {
@@ -19,6 +25,7 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
     TextView itemName, currentPrice, priceChange;
+    TextView diaName,diaPrice,diaUrl;
     TextView startingPrice;
 
     Item item;
@@ -71,20 +78,14 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
         if(item.getItemId() == R.id.edit){
            // createDialog();
         }
+        if(item.getItemId() == R.id.browse){
+            //browse();
+            return true;
+        }
         return false;
     }
 
-    private void createDialog(){
-       // openDialog();
-    }
-    public void setPercent(){
-      //  item.setCurrentPrice();
-      //  currentPrice.setText(Float.toString(item.getCurrentPrice()));
-      //  String var  = Float.toString(item.getPercentageChange());
-      //  priceChange.setText(String.format(Locale.getDefault(),"$ %.0f",var));
-
-    }
-    private void openDialog(){
+    private void editDialog(){
 
     }
 

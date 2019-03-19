@@ -1,6 +1,10 @@
 package cs4330.cs.utep.edu;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,10 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Intent.EXTRA_TEXT;
 
 public class MainActivity extends AppCompatActivity {
     private ListView listview;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
 
+        passLine();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,21 +59,26 @@ public class MainActivity extends AppCompatActivity {
               //  Toast.makeText(this,"update",Toast.LENGTH_SHORT).show();
                 return true;
             }
+            if(id == R.id.browse){
+                browse();
+                return true;
+            }
 
             return super.onOptionsItemSelected(item);
 
     }
 
-    private String passLine() {
+    private void passLine() {
         //checking if link passed
         String action = getIntent().getAction();
         String type = getIntent().getType();
         if (Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
-            url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            url = getIntent().getStringExtra(EXTRA_TEXT);
             //send to dialog
-        }
-        return url;
+            addDialog();
+            diaUrl.setText(url);
 
+        }
     }
     private void addDialog(){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
@@ -102,6 +112,31 @@ public class MainActivity extends AppCompatActivity {
         mBuilder.setView(mView);
         AlertDialog dialog = mBuilder.create();
         dialog.show();
+
+    }
+    private void browse(){
+        String url = "https://www.bestbuy.com";
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
+                .setToolbarColor(Color.BLUE);
+        //
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.getStringExtra(EXTRA_TEXT);
+        PendingIntent menuIntent = PendingIntent.getActivity(this, 0, shareIntent, 0);
+        builder.addMenuItem("Share via PriceWatcher", menuIntent);
+
+        //
+
+
+
+
+
+
+
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(this, Uri.parse(url));
+
+
 
     }
 }

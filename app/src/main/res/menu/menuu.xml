@@ -12,5 +12,8 @@
         android:orderInCategory="90"
         android:title="Update"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/browse"
+        android:title="Browse"/>
 
 </menu>
