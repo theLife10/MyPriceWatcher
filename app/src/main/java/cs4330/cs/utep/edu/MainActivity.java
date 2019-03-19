@@ -1,6 +1,4 @@
 package cs4330.cs.utep.edu;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,9 +10,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.listview);
         adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                popup(view,position);
+            }
+        });
 
         passLine();
     }
@@ -101,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         float dstartprice = Float.parseFloat(startPrice);
                         String url = diaUrl.getText().toString();
                         items.add(new Item(name,dstartprice,url));
-                        adapter.notifyDataSetChanged();
+                      //  adapter.notifyDataSetChanged();
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -113,6 +122,37 @@ public class MainActivity extends AppCompatActivity {
         mBuilder.setView(mView);
         AlertDialog dialog = mBuilder.create();
         dialog.show();
+
+    }
+    private void popup(View v, int position){
+        PopupMenu popup = new PopupMenu(this,v);
+        popup.inflate(R.menu.popup);
+        popup.show();
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId() == R.id.edit){
+                    // createDialog();
+                }
+                if(item.getItemId() == R.id.browse){
+                    browse();
+                    return true;
+                }
+                if(item.getItemId() == R.id.remove){
+                    removeItem(position);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+    }
+    private void removeItem(int position){
+        Item item = items.get(position);
+        items.remove(item);
+        adapter = new ItemAdapter(this,items);
+        listview.setAdapter(adapter);
 
     }
     private void browse(){

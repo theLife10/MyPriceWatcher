@@ -20,7 +20,7 @@ import java.util.List;
 
 
 
-public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuItemClickListener {
+public class ItemAdapter extends ArrayAdapter<Item>  {
 
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
@@ -60,35 +60,11 @@ public class ItemAdapter extends ArrayAdapter<Item> implements PopupMenu.OnMenuI
         String percentage = Float.toString((float) item.getPercentageChange());
         priceChange.setText(percentage);
 
-        listItem.setOnClickListener(v -> {
-            popup(v);
-        });
+     //   listItem.setOnClickListener(v -> {
+      //      popup(v);
+      //  });
 
        return listItem;
     }
-
-    private void popup(View v) {
-        PopupMenu popup = new PopupMenu(getContext(),v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.popup);
-        popup.show();
-    }
-    @Override
-    public boolean onMenuItemClick(MenuItem item){
-        if(item.getItemId() == R.id.edit){
-           // createDialog();
-        }
-        if(item.getItemId() == R.id.browse){
-            //browse();
-            return true;
-        }
-        return false;
-    }
-
-    private void editDialog(){
-
-    }
-
-
 
 }
