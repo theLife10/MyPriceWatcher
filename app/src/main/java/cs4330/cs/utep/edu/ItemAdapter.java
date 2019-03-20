@@ -1,5 +1,4 @@
 package cs4330.cs.utep.edu;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +7,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 public class ItemAdapter extends ArrayAdapter<Item>  {
 
