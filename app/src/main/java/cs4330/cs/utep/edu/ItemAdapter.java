@@ -1,19 +1,10 @@
 package cs4330.cs.utep.edu;
 
 import android.content.Context;
-
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.net.Uri;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +16,14 @@ public class ItemAdapter extends ArrayAdapter<Item>  {
     private Context mContext;
     private List<Item> itemList = new ArrayList<>();
     TextView itemName, currentPrice, priceChange;
-    TextView diaName,diaPrice,diaUrl;
     TextView startingPrice;
-
     Item item;
+
     public ItemAdapter( Context context, List<Item> items){
         super(context, 0, items);
         mContext = context;
         itemList = items;
     }
-
-
     public View getView(int position,View convertView,ViewGroup parent){
         View listItem = convertView;
         if(listItem == null){
@@ -60,11 +48,6 @@ public class ItemAdapter extends ArrayAdapter<Item>  {
         String percentage = Float.toString((float) item.getPercentageChange());
         priceChange.setText(percentage);
 
-     //   listItem.setOnClickListener(v -> {
-      //      popup(v);
-      //  });
-
        return listItem;
     }
-
 }

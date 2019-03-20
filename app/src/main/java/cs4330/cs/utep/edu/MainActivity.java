@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,9 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return super.onOptionsItemSelected(item);
-
     }
-
     private void passLine() {
         //checking if link passed
         String action = getIntent().getAction();
@@ -87,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             //send to dialog
             addDialog();
             diaUrl.setText(url);
-
         }
     }
     private void addDialog(){
@@ -134,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.edit){
                     // createDialog();
+                    editDialog(position);
                 }
                 if(item.getItemId() == R.id.browse){
                     browse();
@@ -155,6 +151,48 @@ public class MainActivity extends AppCompatActivity {
         listview.setAdapter(adapter);
 
     }
+    private void editDialog(int position){
+        Item item = items.get(position);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.layout_dialog,null);
+
+        mBuilder.setTitle("Editing Item");
+
+        //inputs
+        diaName = (EditText) mView.findViewById(R.id.diaItemName);
+        diaPrice =(EditText) mView.findViewById(R.id.diaStartingPrice);
+        diaUrl = (EditText) mView.findViewById(R.id.diaUrl);
+
+        diaName.setText(item.getItem());
+        String startPrice = Float.toString((float) item.getStartPrice());
+        diaPrice.setText(startPrice);
+        diaUrl.setText(item.getUrl());
+
+        mBuilder.setCancelable(false)
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = diaName.getText().toString();
+                        String startPrice = diaPrice.getText().toString();
+                        float dstartprice = Float.parseFloat(startPrice);
+                        String url = diaUrl.getText().toString();
+                        item.setItem(name);
+                        item.setStartPrice(dstartprice);
+                        item.setUrl(url);
+                        adapter = new ItemAdapter(getApplicationContext(),items);
+                        listview.setAdapter(adapter);
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+    }
     private void browse(){
         String url = "https://www.bestbuy.com";
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
@@ -164,5 +202,4 @@ public class MainActivity extends AppCompatActivity {
         customTabsIntent.launchUrl(this, Uri.parse(url));
 
     }
-
 }

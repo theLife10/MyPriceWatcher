@@ -51,6 +51,10 @@ public class Item {
         return mUrl;
     }
 
+    public void setUrl(String surl){
+        mUrl=surl;
+    }
+
     public double getPercentageChange(){
         return (mStartPrice - mCurrentPrice) / 100;
     }
