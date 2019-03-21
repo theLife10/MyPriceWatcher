@@ -1,8 +1,10 @@
 package cs4330.cs.utep.edu;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import static android.content.Intent.EXTRA_TEXT;
 
@@ -49,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //passLine();
+
+        passLine();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if(id == R.id.update){
                 adapter.setPercent();
-                adapter.notifyDataSetChanged();
-               // Toast.makeText(this,"update",Toast.LENGTH_SHORT).show();
+                listview.setAdapter(adapter);
                 return true;
             }
             if(id == R.id.browse){
@@ -152,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     private void removeItem(int position){
         Item item = items.get(position);
         items.remove(item);
-        adapter = new ItemAdapter(this,items);
+       // adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
 
     }
@@ -184,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                         item.setItem(name);
                         item.setStartPrice(dstartprice);
                         item.setUrl(url);
-                        adapter = new ItemAdapter(getApplicationContext(),items);
+                       // adapter = new ItemAdapter(getApplicationContext(),items);
                         listview.setAdapter(adapter);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -199,14 +203,17 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
     public void browse(){
+
         url = "https://www.bestbuy.com";
         Intent intent = new Intent(this, CustomBroadcastReciever.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
                 .setToolbarColor(Color.BLUE)
                 .addMenuItem("Share via PriceWatcher",pendingIntent);
         CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.intent.setData(Uri.parse(url));
         customTabsIntent.launchUrl(this, Uri.parse(url));
+
 
     }
 }

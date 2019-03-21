@@ -38,13 +38,7 @@ public class ItemAdapter extends ArrayAdapter<Item>  {
         //Setting the starting price
         String start = Double.toString(item.getStartPrice());
         startingPrice.setText(start);
-        //Setting the current price
-     //   String dcurrentPrice = Float.toString((float) item.getCurrentPrice());
-     //   currentPrice.setText(dcurrentPrice);
-        //setting up percentage
-    //    String percentage = Float.toString((float) item.getPercentageChange());
-     //   priceChange.setText(percentage);
-        //setPercent();
+        setPercent();
        return listItem;
     }
     public void setPercent(){

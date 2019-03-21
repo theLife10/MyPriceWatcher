@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import static android.content.Intent.EXTRA_TEXT;
-
 public class CustomBroadcastReciever extends BroadcastReceiver {
+    private String url;
     @Override
     public void onReceive(Context context, Intent intent) {
         String url = intent.getDataString();
