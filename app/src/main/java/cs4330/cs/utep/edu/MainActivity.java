@@ -1,4 +1,6 @@
 package cs4330.cs.utep.edu;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView listview;
     ItemAdapter adapter;
     EditText diaName,diaPrice,diaUrl;
-    Button diaSave,diaCancel;
     String url;
     Item product;
     List<Item> items = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        passLine();
+        //passLine();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             if(id == R.id.update){
-              //  adapter.setPercent();
-               // adapter.notifyDataSetChanged();
-              //  Toast.makeText(this,"update",Toast.LENGTH_SHORT).show();
+                adapter.setPercent();
+                adapter.notifyDataSetChanged();
+               // Toast.makeText(this,"update",Toast.LENGTH_SHORT).show();
                 return true;
             }
             if(id == R.id.browse){
@@ -74,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
             return super.onOptionsItemSelected(item);
     }
-    private void passLine() {
+
+    public void passLine() {
         //checking if link passed
         String action = getIntent().getAction();
         String type = getIntent().getType();
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             //send to dialog
             addDialog();
             diaUrl.setText(url);
+
         }
     }
     private void addDialog(){
@@ -193,11 +198,13 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = mBuilder.create();
         dialog.show();
     }
-    private void browse(){
-        String url = "https://www.bestbuy.com";
+    public void browse(){
+        url = "https://www.bestbuy.com";
+        Intent intent = new Intent(this, CustomBroadcastReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
-               .setToolbarColor(Color.BLUE)
-                .addDefaultShareMenuItem();
+                .setToolbarColor(Color.BLUE)
+                .addMenuItem("Share via PriceWatcher",pendingIntent);
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(this, Uri.parse(url));
 
