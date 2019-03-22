@@ -1,6 +1,9 @@
 package cs4330.cs.utep.edu;
 
-public class Item {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Item implements Parcelable {
 
 
     private String mItem;
@@ -59,4 +62,16 @@ public class Item {
         return (mStartPrice - mCurrentPrice) / 100;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mItem);
+        dest.writeFloat(mStartPrice);
+        dest.writeFloat(mCurrentPrice);
+        dest.writeString(mUrl);
+    }
 }

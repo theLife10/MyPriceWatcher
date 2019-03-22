@@ -1,13 +1,7 @@
 package cs4330.cs.utep.edu;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.net.Uri;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -23,7 +16,6 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 import static android.content.Intent.EXTRA_TEXT;
@@ -34,12 +26,16 @@ public class MainActivity extends AppCompatActivity {
     EditText diaName,diaPrice,diaUrl;
     String url;
     Item product;
-    List<Item> items = new ArrayList<>();
-
+    ArrayList<Item> items = new ArrayList<>();
+    int requestcode = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(savedInstanceState != null){
+            items = savedInstanceState.getParcelableArrayList("items");
+        }
 
         listview = (ListView) findViewById(R.id.listview);
         adapter = new ItemAdapter(this,items);
@@ -53,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        passLine();
+       // passLine();
 
     }
     @Override
@@ -89,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
             url = getIntent().getStringExtra(EXTRA_TEXT);
             //send to dialog
-            addDialog();
-            diaUrl.setText(url);
+          //  addDialog();
+          //  diaUrl.setText(url);
 
         }
     }
@@ -203,17 +199,28 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
     public void browse(){
-
         url = "https://www.bestbuy.com";
-        Intent intent = new Intent(this, CustomBroadcastReciever.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
-                .setToolbarColor(Color.BLUE)
-                .addMenuItem("Share via PriceWatcher",pendingIntent);
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.intent.setData(Uri.parse(url));
-        customTabsIntent.launchUrl(this, Uri.parse(url));
 
+       Intent sendUrl = new Intent(getApplicationContext(),Browse.class);
+       sendUrl.putExtra("url",url);
 
+        startActivityForResult(sendUrl,requestcode);
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        String returnedUrl = data.getData().toString();
+        Toast.makeText(this,returnedUrl,Toast.LENGTH_SHORT).show();
+        addDialog();
+        diaUrl.setText(returnedUrl);
+    }
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("items", items);
+    }
+
 }
