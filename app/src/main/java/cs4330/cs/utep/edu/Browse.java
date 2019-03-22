@@ -31,7 +31,7 @@ public class Browse extends AppCompatActivity {
 
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
+
     }
 
     @Override
