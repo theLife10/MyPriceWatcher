@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             if(id == R.id.browse){
-                browse();
+                url = "https://www.bestbuy.com";
+                browse(url);
                 return true;
             }
 
@@ -137,7 +138,8 @@ public class MainActivity extends AppCompatActivity {
                     editDialog(position);
                 }
                 if(item.getItemId() == R.id.browse){
-                    browse();
+                    Item itemUrl = items.get(position);
+                    browse(itemUrl.getUrl());
                     return true;
                 }
                 if(item.getItemId() == R.id.remove){
@@ -198,25 +200,23 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = mBuilder.create();
         dialog.show();
     }
-    public void browse(){
-        url = "https://www.bestbuy.com";
 
+    public void browse(String url){
        Intent sendUrl = new Intent(getApplicationContext(),Browse.class);
        sendUrl.putExtra("url",url);
 
-        startActivityForResult(sendUrl,requestcode);
+       startActivityForResult(sendUrl,requestcode);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
         String returnedUrl = data.getData().toString();
-        Toast.makeText(this,returnedUrl,Toast.LENGTH_SHORT).show();
-        addDialog();
-        diaUrl.setText(returnedUrl);
+        if(resultCode == 0) {
+            Toast.makeText(this, returnedUrl, Toast.LENGTH_SHORT).show();
+            addDialog();
+            diaUrl.setText(returnedUrl);
+        }
     }
-
-
-
     @Override
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);

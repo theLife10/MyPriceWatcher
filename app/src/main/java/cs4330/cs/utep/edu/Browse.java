@@ -1,5 +1,6 @@
 package cs4330.cs.utep.edu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,10 @@ public class Browse extends AppCompatActivity {
            share();
             return true;
         }
+        if(id == R.id.exit){
+            exit();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -68,5 +73,11 @@ public class Browse extends AppCompatActivity {
         shareIntent.setData(Uri.parse(url));
         setResult(0,shareIntent);
         finish();
+    }
+    public void exit(){
+        Intent i = new Intent();
+        i.setData(Uri.parse(""));
+       setResult(Activity.RESULT_OK,i);
+       finish();
     }
 }
