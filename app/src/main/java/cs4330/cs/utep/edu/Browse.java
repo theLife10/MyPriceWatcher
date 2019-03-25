@@ -1,12 +1,15 @@
 package cs4330.cs.utep.edu;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,8 +17,8 @@ import android.webkit.WebViewClient;
 import static android.content.Intent.EXTRA_TEXT;
 
 public class Browse extends AppCompatActivity {
-    WebView web;
-    String url;
+    private WebView web;
+    private String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +57,6 @@ public class Browse extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onBackPressed(){
         if(web.canGoBack()){
@@ -69,7 +71,7 @@ public class Browse extends AppCompatActivity {
         url = web.getUrl();
         shareIntent.putExtra(Intent.EXTRA_TEXT,url);
         shareIntent.putExtra(Intent.EXTRA_SUBJECT,"Copied url");
-
+        //passing data back
         shareIntent.setData(Uri.parse(url));
         setResult(0,shareIntent);
         finish();

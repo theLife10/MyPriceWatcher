@@ -1,7 +1,10 @@
 package cs4330.cs.utep.edu;
-
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
-
-
 import java.util.ArrayList;
-
 
 import static android.content.Intent.EXTRA_TEXT;
 
@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-       // passLine();
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
+            if(id == R.id.browse){
+             url = "https://www.bestbuy.com";
+             browse(url);
+                return true;
+             }
+
             if(id == R.id.add){
                 addDialog();
                 return true;
@@ -70,11 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 listview.setAdapter(adapter);
                 return true;
             }
-            if(id == R.id.browse){
+            if(id == R.id.customtabs){
                 url = "https://www.bestbuy.com";
-                browse(url);
+                chromeTabs(url);
                 return true;
             }
+
 
             return super.onOptionsItemSelected(item);
     }
@@ -206,6 +210,15 @@ public class MainActivity extends AppCompatActivity {
        sendUrl.putExtra("url",url);
 
        startActivityForResult(sendUrl,requestcode);
+    }
+    public void chromeTabs(String url){
+        Intent intent = new Intent(this, CustomBroadcastReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
+                .setToolbarColor(Color.BLUE)
+                .addMenuItem("Share via PriceWatcher",pendingIntent);
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(this, Uri.parse(url));
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -28,7 +28,10 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
+        <receiver
+            android:name=".CustomBroadcastReciever"
+            android:enabled="true">
+        </receiver>
     </application>
 
 </manifest>
