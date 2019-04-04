@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Item product;
     ArrayList<Item> items = new ArrayList<>();
     int requestcode = 0;
+    DBHelper helper ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        passLine();
+
+
+        helper = new DBHelper(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
             url = getIntent().getStringExtra(EXTRA_TEXT);
             //send to dialog
-          //  addDialog();
-          //  diaUrl.setText(url);
+            addDialog();
+            diaUrl.setText(url);
 
         }
     }
