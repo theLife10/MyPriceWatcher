@@ -33,10 +33,11 @@ public class ItemAdapter extends ArrayAdapter<Item>  {
 
         item = itemList.get(position);
         item.setCurrentPrice();
+        item.setStartPrice();
         //setting the name
         itemName.setText(item.getItem());
         //Setting the starting price
-        String start = Double.toString(item.getStartPrice());
+        String start = Float.toString(item.getStartPrice());
         startingPrice.setText("$ "+start);
         setPercent();
        return listItem;

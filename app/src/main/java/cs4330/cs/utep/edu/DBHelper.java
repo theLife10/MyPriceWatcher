@@ -1,8 +1,13 @@
 package cs4330.cs.utep.edu;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
+import static android.support.customtabs.CustomTabsIntent.KEY_DESCRIPTION;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
@@ -15,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_CURRENTPRICE = "current";
     private static final String KEY_PERCENT = "percent";
     private static final String KEY_URL = "url";
+    private static final String KEY_DONE = "done";
 
 
     public DBHelper(Context context){
@@ -40,4 +46,35 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
 
     }
+
+    public boolean addItem(String name,  String url) {
+        Item item = new Item();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, name); // task name
+       // values.put(KEY_STARTINGPRICE, startPrice);
+        values.put(KEY_URL, url);
+        long id = db.insert(PRICE_TABLE, null, values);
+       // item.setId((int) id);
+     //   db.close();
+
+        if(id == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    public void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(PRICE_TABLE, null, new String[]{});
+        db.close();
+    }
+    public Cursor getData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + PRICE_TABLE;
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
 }

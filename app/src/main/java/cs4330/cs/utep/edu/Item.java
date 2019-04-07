@@ -11,6 +11,7 @@ public class Item implements Parcelable {
     private float mCurrentPrice;
     private PriceFinder findPrice;
     private String mUrl;
+    private int id;
 
 
     public Item(){
@@ -19,23 +20,46 @@ public class Item implements Parcelable {
         mStartPrice = (float) 0.00;
         mCurrentPrice = (float) 0.00;
     }
-    public Item(String item, float startPrice,String url) {
+    public Item(String item, String url) {
         mItem = item;
-        mStartPrice = startPrice;
         mUrl = url;
         findPrice = new PriceFinder();
     }
 
-    public double getStartPrice() {
+    protected Item(Parcel in) {
+        mItem = in.readString();
+        mStartPrice = in.readFloat();
+        mCurrentPrice = in.readFloat();
+        mUrl = in.readString();
+        id = in.readInt();
+    }
+
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
+
+    public void setId(int i){
+        id =i;
+    }
+
+    public float getStartPrice() {
         return mStartPrice;
     }
 
-    public double getCurrentPrice() {
+    public float getCurrentPrice() {
         return mCurrentPrice;
     }
 
-    public void setStartPrice(float start) {
-        mStartPrice = start;
+    public void setStartPrice() {
+        mStartPrice = mCurrentPrice = findPrice.findPrice();
     }
 
     public void setCurrentPrice(){
@@ -62,6 +86,8 @@ public class Item implements Parcelable {
         return (mStartPrice - mCurrentPrice) / 100;
     }
 
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -73,5 +99,7 @@ public class Item implements Parcelable {
         dest.writeFloat(mStartPrice);
         dest.writeFloat(mCurrentPrice);
         dest.writeString(mUrl);
+        dest.writeInt(id);
+
     }
 }

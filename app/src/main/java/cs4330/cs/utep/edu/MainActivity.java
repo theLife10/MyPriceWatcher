@@ -2,6 +2,7 @@ package cs4330.cs.utep.edu;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Item product;
     ArrayList<Item> items = new ArrayList<>();
     int requestcode = 0;
-    DBHelper helper ;
+    DBHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
         //inputs
         diaName = (EditText) mView.findViewById(R.id.diaItemName);
-        diaPrice =(EditText) mView.findViewById(R.id.diaStartingPrice);
+
         diaUrl = (EditText) mView.findViewById(R.id.diaUrl);
 
         mBuilder.setCancelable(false)
@@ -116,10 +117,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = diaName.getText().toString();
-                        String startPrice = diaPrice.getText().toString();
-                        float dstartprice = Float.parseFloat(startPrice);
                         String url = diaUrl.getText().toString();
-                        items.add(new Item(name,dstartprice,url));
+                        items.add(new Item(name, url));
+                        addDataToDatabase(name,url);
                       //  adapter.notifyDataSetChanged();
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -176,12 +176,11 @@ public class MainActivity extends AppCompatActivity {
 
         //inputs
         diaName = (EditText) mView.findViewById(R.id.diaItemName);
-        diaPrice =(EditText) mView.findViewById(R.id.diaStartingPrice);
+
         diaUrl = (EditText) mView.findViewById(R.id.diaUrl);
 
         diaName.setText(item.getItem());
-        String startPrice = Float.toString((float) item.getStartPrice());
-        diaPrice.setText(startPrice);
+
         diaUrl.setText(item.getUrl());
 
         mBuilder.setCancelable(false)
@@ -189,11 +188,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = diaName.getText().toString();
-                        String startPrice = diaPrice.getText().toString();
-                        float dstartprice = Float.parseFloat(startPrice);
                         String url = diaUrl.getText().toString();
                         item.setItem(name);
-                        item.setStartPrice(dstartprice);
                         item.setUrl(url);
                        // adapter = new ItemAdapter(getApplicationContext(),items);
                         listview.setAdapter(adapter);
@@ -239,6 +235,27 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("items", items);
+    }
+
+    public void addDataToDatabase(String name,  String url){
+        boolean in =helper.addItem(name,url);
+
+        if(in){
+            Toast.makeText(this,"passed",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
+        }
+
+        Cursor data = helper.getData();
+
+        int itemID = -1;
+        while(data.moveToNext()){
+            itemID = data.getInt(0);
+
+        }
+
+
     }
 
 }
