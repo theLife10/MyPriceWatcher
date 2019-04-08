@@ -26,14 +26,17 @@ public class MainActivity extends AppCompatActivity {
     ItemAdapter adapter;
     EditText diaName,diaPrice,diaUrl;
     String url;
-    Item product;
+    Item product = new Item();
     ArrayList<Item> items = new ArrayList<>();
     int requestcode = 0;
-    DBHelper helper;
+    DBHelper helper = new DBHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        product.setStartPrice();
 
         if(savedInstanceState != null){
             items = savedInstanceState.getParcelableArrayList("items");
@@ -116,10 +119,18 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         String name = diaName.getText().toString();
                         String url = diaUrl.getText().toString();
-                        items.add(new Item(name, url));
-                        addDataToDatabase(name,url);
+                        product.setItem(name);
+                        product.setUrl(url);
+
+                        String i = product.getItem();
+                        String u = product.getUrl();
+                        addDataToDatabase(i,u);
+                        addDataDisplay();
+
+                        items.add(product);
                       //  adapter.notifyDataSetChanged();
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -238,24 +249,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addDataToDatabase(String name,  String url){
-        boolean in =helper.addItem(name,url);
-
+        float start =  product.getStartPrice();
+        float curr = product.getCurrentPrice();
+        double percent =  product.getPercentageChange();
+        boolean in =helper.addItem(name,url,start,curr,percent);
         if(in){
             Toast.makeText(this,"passed",Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void addDataDisplay(){
 
         Cursor data = helper.getData();
 
         int itemID = -1;
+        String itemName = null;
+        String urlItem = null;
+        float startPrice= (float) 0.00;
+        float cur = (float) 0.00;
+        float per = (float) 0.00;
+
         while(data.moveToNext()){
             itemID = data.getInt(0);
+            itemName = data.getString(1);
+            startPrice = data.getFloat(2);
+            cur = data.getFloat(3);
+            per = data.getFloat(4);
+            urlItem = data.getString(5);
 
         }
+        String t = Float.toString(startPrice);
 
-
+        Toast.makeText(this,itemName,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,urlItem,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,t,Toast.LENGTH_SHORT).show();
     }
+
 
 }

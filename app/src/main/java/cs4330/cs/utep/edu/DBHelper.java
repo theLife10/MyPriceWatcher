@@ -32,9 +32,9 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "CREATE TABLE " + PRICE_TABLE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_NAME + " TEXT, "
-                + KEY_STARTINGPRICE + " FLOAT,"
-                + KEY_CURRENTPRICE + " FLOAT,"
-                + KEY_PERCENT+ "FLOAT,"
+                + KEY_STARTINGPRICE + " FLOAT, "
+                + KEY_CURRENTPRICE + " FLOAT, "
+                + KEY_PERCENT+ " FLOAT, "
                 + KEY_URL+ " TEXT "+
                 ")";
         db.execSQL(sql);
@@ -47,16 +47,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addItem(String name,  String url) {
+    public boolean addItem(String name,  String url,float start,float curr,double percent) {
         Item item = new Item();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, name); // task name
-       // values.put(KEY_STARTINGPRICE, startPrice);
+        values.put(KEY_STARTINGPRICE,start);
+        values.put(KEY_CURRENTPRICE,curr);
         values.put(KEY_URL, url);
         long id = db.insert(PRICE_TABLE, null, values);
        // item.setId((int) id);
-     //   db.close();
+        db.close();
 
         if(id == -1){
             return false;
