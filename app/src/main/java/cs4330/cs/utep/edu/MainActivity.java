@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     EditText diaName,diaPrice,diaUrl;
     String url;
     Item product = new Item();
-    ArrayList<Item> items = new ArrayList<>();
+    ArrayList<Item> items ;
     int requestcode = 0;
     DBHelper helper = new DBHelper(this);
 
@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        helper = new DBHelper(this);
+        items = (ArrayList<Item>) helper.allItems();
 
         product.setStartPrice();
 
@@ -56,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         passLine();
 
 
-        helper = new DBHelper(this);
-        helper.deleteAll();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -35,8 +35,6 @@ public class ItemAdapter extends ArrayAdapter<Item>  {
             priceChange = (TextView) listItem.findViewById(R.id.percent);
 
         }
-
-
      //   item.setCurrentPrice();
      //   item.setStartPrice();
 

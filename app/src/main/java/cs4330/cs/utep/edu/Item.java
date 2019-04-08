@@ -11,7 +11,7 @@ public class Item implements Parcelable {
     private float mCurrentPrice;
     private PriceFinder findPrice;
     private String mUrl;
-    private int id;
+    private int mId;
 
 
     public Item(){
@@ -20,7 +20,8 @@ public class Item implements Parcelable {
         mStartPrice = (float) 0.00;
         mCurrentPrice = (float) 0.00;
     }
-    public Item(String item, String url) {
+    public Item(int id,String item, String url) {
+        mId = id;
         mItem = item;
         mUrl = url;
         findPrice = new PriceFinder();
@@ -31,7 +32,7 @@ public class Item implements Parcelable {
         mStartPrice = in.readFloat();
         mCurrentPrice = in.readFloat();
         mUrl = in.readString();
-        id = in.readInt();
+        mId = in.readInt();
     }
 
     public static final Creator<Item> CREATOR = new Creator<Item>() {
@@ -47,7 +48,7 @@ public class Item implements Parcelable {
     };
 
     public void setId(int i){
-        id =i;
+        mId =i;
     }
 
     public float getStartPrice() {
@@ -99,7 +100,7 @@ public class Item implements Parcelable {
         dest.writeFloat(mStartPrice);
         dest.writeFloat(mCurrentPrice);
         dest.writeString(mUrl);
-        dest.writeInt(id);
+        dest.writeInt(mId);
 
     }
 }

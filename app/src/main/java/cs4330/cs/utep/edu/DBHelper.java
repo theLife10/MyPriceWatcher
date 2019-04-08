@@ -82,22 +82,22 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(PRICE_TABLE, KEY_ID +  "=" + id, null) > 0;
     }
-    //get back to this tommorrow
+
     public List<Item> allItems() {
-        List<Item> todoList = new ArrayList<>();
+        List<Item> watchedPrices = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + PRICE_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(0);
-                String description = cursor.getString(1);
-
-                ToDoItem task = new ToDoItem(id, description, done);
-                todoList.add(task);
+                String name = cursor.getString(1);
+                String url = cursor.getString(5);
+                Item item = new Item(id, name, url);
+                watchedPrices.add(item);
             } while (cursor.moveToNext());
         }
-        return todoList;
+        return watchedPrices;
     }
 
 
