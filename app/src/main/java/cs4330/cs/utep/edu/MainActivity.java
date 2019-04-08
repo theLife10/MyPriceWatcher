@@ -178,12 +178,6 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getId();
         String sId = Integer.toString(id);
 
-       // if(deleteRow > 0){
-
-       // }else{
-         //   Toast.makeText(MainActivity.this, "Something went wrong :(.", Toast.LENGTH_LONG).show();
-      //  }
-
         helper.deleteData(sId);
         items.remove(item);
 
@@ -215,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
                         String url = diaUrl.getText().toString();
                         item.setItem(name);
                         item.setUrl(url);
+                        helper.update(item);
+                        adapter.notifyDataSetChanged();
                        // adapter = new ItemAdapter(getApplicationContext(),items);
                         listview.setAdapter(adapter);
                     }

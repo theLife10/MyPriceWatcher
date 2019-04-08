@@ -101,5 +101,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return watchedPrices;
     }
 
+    public void update(Item item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, item.getItem());
+        values.put(KEY_URL, item.getUrl());
+        db.update(PRICE_TABLE, values, KEY_ID + " = ?", new String[]{String.valueOf(item.getId())});
+        db.close();
+    }
+
 
 }
