@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         helper = new DBHelper(this);
+        helper.deleteAll();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -173,7 +174,19 @@ public class MainActivity extends AppCompatActivity {
     }
     private void removeItem(int position){
         Item item = items.get(position);
+        String id = Integer.toString(position);
+
+       // if(deleteRow > 0){
+
+       // }else{
+         //   Toast.makeText(MainActivity.this, "Something went wrong :(.", Toast.LENGTH_LONG).show();
+      //  }
+
+
         items.remove(item);
+
+        boolean boo = helper.deleteData("0");
+        Toast.makeText(MainActivity.this, Boolean.toString(boo), Toast.LENGTH_LONG).show();
        // adapter = new ItemAdapter(this,items);
         listview.setAdapter(adapter);
 
@@ -251,8 +264,8 @@ public class MainActivity extends AppCompatActivity {
     public void addDataToDatabase(String name,  String url){
         float start =  product.getStartPrice();
         float curr = product.getCurrentPrice();
-        double percent =  product.getPercentageChange();
-        boolean in =helper.addItem(name,url,start,curr,percent);
+       // double percent =  product.getPercentageChange();
+        boolean in =helper.addItem(name,url,start,curr);
         if(in){
             Toast.makeText(this,"passed",Toast.LENGTH_SHORT).show();
         }
@@ -270,20 +283,20 @@ public class MainActivity extends AppCompatActivity {
         String urlItem = null;
         float startPrice= (float) 0.00;
         float cur = (float) 0.00;
-        float per = (float) 0.00;
 
         while(data.moveToNext()){
             itemID = data.getInt(0);
             itemName = data.getString(1);
             startPrice = data.getFloat(2);
             cur = data.getFloat(3);
-            per = data.getFloat(4);
+
             urlItem = data.getString(5);
 
         }
         String t = Float.toString(startPrice);
+        String id = Integer.toString(itemID);
 
-        Toast.makeText(this,itemName,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,id,Toast.LENGTH_SHORT).show();
         Toast.makeText(this,urlItem,Toast.LENGTH_SHORT).show();
         Toast.makeText(this,t,Toast.LENGTH_SHORT).show();
     }

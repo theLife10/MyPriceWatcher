@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.support.customtabs.CustomTabsIntent.KEY_DESCRIPTION;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -18,7 +21,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_STARTINGPRICE = "starting";
     private static final String KEY_CURRENTPRICE = "current";
-    private static final String KEY_PERCENT = "percent";
     private static final String KEY_URL = "url";
     private static final String KEY_DONE = "done";
 
@@ -32,11 +34,10 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "CREATE TABLE " + PRICE_TABLE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_NAME + " TEXT, "
-                + KEY_STARTINGPRICE + " FLOAT, "
-                + KEY_CURRENTPRICE + " FLOAT, "
-                + KEY_PERCENT+ " FLOAT, "
-                + KEY_URL+ " TEXT "+
-                ")";
+                + KEY_STARTINGPRICE + "REAL,"
+                + KEY_CURRENTPRICE + "REAL,"
+                + KEY_URL + "TEXT,"
+                + KEY_DONE + " INTEGER" + ")";
         db.execSQL(sql);
     }
 
@@ -47,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addItem(String name,  String url,float start,float curr,double percent) {
+    public boolean addItem(String name,  String url,float start,float curr) {
         Item item = new Item();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -56,7 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(KEY_CURRENTPRICE,curr);
         values.put(KEY_URL, url);
         long id = db.insert(PRICE_TABLE, null, values);
-       // item.setId((int) id);
+        item.setId((int) id);
         db.close();
 
         if(id == -1){
@@ -77,5 +78,27 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
+    public boolean deleteData(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(PRICE_TABLE, KEY_ID +  "=" + id, null) > 0;
+    }
+    //get back to this tommorrow
+    public List<Item> allItems() {
+        List<Item> todoList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + PRICE_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String description = cursor.getString(1);
+
+                ToDoItem task = new ToDoItem(id, description, done);
+                todoList.add(task);
+            } while (cursor.moveToNext());
+        }
+        return todoList;
+    }
+
 
 }
