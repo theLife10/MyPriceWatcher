@@ -78,9 +78,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
-    public boolean deleteData(String id){
+    public void deleteData(String id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(PRICE_TABLE, KEY_ID +  "=" + id, null) > 0;
+         db.delete(PRICE_TABLE, KEY_ID +  "=" + id, null) ;
+         db.close();
     }
 
     public List<Item> allItems() {

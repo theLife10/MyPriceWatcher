@@ -50,6 +50,9 @@ public class Item implements Parcelable {
     public void setId(int i){
         mId =i;
     }
+    public int getId(){
+        return mId;
+    }
 
     public float getStartPrice() {
         return mStartPrice;
