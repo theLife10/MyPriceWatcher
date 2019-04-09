@@ -1,10 +1,14 @@
 package cs4330.cs.utep.edu;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Item> items ;
     int requestcode = 0;
     DBHelper helper = new DBHelper(this);
+    WifiManager wifiManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
         passLine();
 
+
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        registerReceiver(wifiReceiver, intentFilter);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menuu, menu);
@@ -269,4 +282,20 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
         }
     }
+    //seprete class
+    private BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
+                    WifiManager.WIFI_STATE_UNKNOWN);
+
+            if(wifiStateExtra == WifiManager.WIFI_STATE_ENABLED){
+                Toast.makeText(context,"wifi enabled", Toast.LENGTH_SHORT).show();
+            }
+            if(wifiStateExtra == WifiManager.WIFI_STATE_DISABLED){
+                Toast.makeText(context,"wifi disabled", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    };
 }
