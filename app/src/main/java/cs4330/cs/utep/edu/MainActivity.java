@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.provider.Settings;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -61,16 +62,19 @@ public class MainActivity extends AppCompatActivity {
                 popup(view,position);
             }
         });
-
+       // check = new WifiCheck();
+      //  check.checkForWifi();
         passLine();
+
+
 
 
     }
     @Override
     protected void onStart() {
         super.onStart();
-        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        registerReceiver(wifiReceiver, intentFilter);
+        IntentFilter intent = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        registerReceiver(wifiReceiver,intent);
     }
 
     @Override
@@ -290,10 +294,13 @@ public class MainActivity extends AppCompatActivity {
                     WifiManager.WIFI_STATE_UNKNOWN);
 
             if(wifiStateExtra == WifiManager.WIFI_STATE_ENABLED){
-                Toast.makeText(context,"wifi enabled", Toast.LENGTH_SHORT).show();
+               Toast.makeText(context,"wifi enabled", Toast.LENGTH_SHORT).show();
             }
             if(wifiStateExtra == WifiManager.WIFI_STATE_DISABLED){
                 Toast.makeText(context,"wifi disabled", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+
+
             }
 
         }
