@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 public class WifiCheck {
-    int wifiState =0;
+
 
      BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
         @Override
@@ -18,16 +18,16 @@ public class WifiCheck {
                     WifiManager.WIFI_STATE_UNKNOWN);
 
             if(wifiStateExtra == WifiManager.WIFI_STATE_ENABLED){
-                wifiState = 1;
+
                 Toast.makeText(context,"wifi enabled", Toast.LENGTH_SHORT).show();
             }
             if(wifiStateExtra == WifiManager.WIFI_STATE_DISABLED){
-                wifiState=0;
+                context.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                 Toast.makeText(context,"wifi disabled", Toast.LENGTH_SHORT).show();
             }
+
         }
     };
-     public int getWifiState(){
-         return wifiState;
-     }
+
+
 }

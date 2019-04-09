@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-public class PriceFinder  {
-
+public class PriceFinder extends AsyncTask<Void,Void,Void> {
+    String mUrl= null;
     public float findPrice(){
         float price = (float) 0.00;
         Random r = new Random();
@@ -21,27 +21,30 @@ public class PriceFinder  {
         float floatingnumber = (float) price;
         return floatingnumber;
     }
+    public void setUrl(String url){
+        mUrl = url;
+    }
 
+    @Override
+    protected Void doInBackground(Void...voids) {
+        try {
 
-    protected Void doInBackground(Void... voids) {
-      //  try {
-            //Connect to the website
-          //  Document document = Jsoup.connect(url).get();
+            Document document = Jsoup.connect(mUrl).get();
 
             //Get the logo source of the website
-           // Element img = document.select("img").first();
+            Element img = document.select("img").first();
             // Locate the src attribute
-          //  String imgSrc = img.absUrl("src");
+            String imgSrc = img.absUrl("src");
             // Download image from URL
-          //  InputStream input = new java.net.URL(imgSrc).openStream();
-            //
+            InputStream input = new java.net.URL(imgSrc).openStream();
+
 
             //Get the title of the website
-        //    String title = document.title();
+            String title = document.title();
 
-   //     } catch (IOException e) {
-            //e.printStackTrace();
-    //    }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }

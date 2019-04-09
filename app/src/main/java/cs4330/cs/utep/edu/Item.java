@@ -64,6 +64,7 @@ public class Item implements Parcelable {
 
     public void setStartPrice() {
         mStartPrice = mCurrentPrice = findPrice.findPrice();
+       // String s = findPrice
     }
 
     public void setCurrentPrice(){

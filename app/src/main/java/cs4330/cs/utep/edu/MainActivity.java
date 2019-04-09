@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.content.Intent.EXTRA_TEXT;
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         passLine();
 
 
-
+       // new Price().execute();
 
     }
     @Override
@@ -76,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         IntentFilter intent = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
         registerReceiver(check.wifiReceiver,intent);
-        if(check.getWifiState() == 0){
-            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-        }
+
     }
 
     @Override
@@ -288,6 +292,28 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class Price extends AsyncTask<Void,Void,Void>{
+        String name =null;
+        String u = "https://www.bestbuy.com/site/canon-eos-rebel-t7i-dslr-camera-with-ef-s-18-55mm-is-stm-lens-black/5792700.p?skuId=5792700";
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                // Connect to the web site
+                Document document = Jsoup.connect(u).get();
+                // Get the html document title
+               name = document.title();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            // Set title into TextView
+            Toast.makeText(getApplicationContext(),name,Toast.LENGTH_SHORT).show();
         }
     }
 }
