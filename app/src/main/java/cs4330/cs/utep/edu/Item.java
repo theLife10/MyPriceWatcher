@@ -2,6 +2,7 @@ package cs4330.cs.utep.edu;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.Toast;
 
 public class Item implements Parcelable {
 
@@ -9,22 +10,23 @@ public class Item implements Parcelable {
     private String mItem;
     private float mStartPrice;
     private float mCurrentPrice;
-    private PriceFinder findPrice;
+   // private PriceFinder findPrice;
     private String mUrl;
     private int mId;
 
 
     public Item(){
         mItem = "";
-        findPrice = new PriceFinder();
+      //  findPrice = new PriceFinder();
         mStartPrice = (float) 0.00;
         mCurrentPrice = (float) 0.00;
     }
-    public Item(int id,String item, String url) {
+    public Item(int id,String item, String url,float start) {
         mId = id;
         mItem = item;
         mUrl = url;
-        findPrice = new PriceFinder();
+        mStartPrice=start;
+   //     findPrice = new PriceFinder();
     }
 
     protected Item(Parcel in) {
@@ -62,13 +64,32 @@ public class Item implements Parcelable {
         return mCurrentPrice;
     }
 
-    public void setStartPrice() {
-        mStartPrice = mCurrentPrice = findPrice.findPrice();
+    public void setStartPrice(String price) {
+     //   mStartPrice = mCurrentPrice = findPrice.findPrice();
        // String s = findPrice
+//      //  new PriceFinder().execute();
+//        findPrice.execute(getUrl());
+       // String s= findPrice.getPrice();
+        mStartPrice = Float.parseFloat(price);
     }
 
-    public void setCurrentPrice(){
-        mCurrentPrice = findPrice.findPrice();
+    public void setFindPrice(String url){
+    //    findPrice.execute(url);
+    //    String s= findPrice.getPrice();
+     //   mStartPrice = Float.parseFloat(s);
+//
+
+    }
+
+    public void setCurrentPrice(float p){
+      //  mCurrentPrice = findPrice.findPrice();
+      //  findPrice.execute(getUrl());
+      //  String s= findPrice.getPrice();
+      //  mCurrentPrice = Float.parseFloat(s);
+      //  findPrice.execute(url);
+     //   String s= findPrice.getPrice();
+      //  mCurrentPrice = Float.parseFloat(s);
+        mCurrentPrice = p;
     }
 
     public void setItem(String item) {

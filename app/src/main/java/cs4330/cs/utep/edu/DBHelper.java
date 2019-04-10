@@ -94,7 +94,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
                 String url = cursor.getString(5);
-                Item item = new Item(id, name, url);
+                float start = cursor.getFloat(2);
+                Item item = new Item(id, name, url,start);
                 watchedPrices.add(item);
             } while (cursor.moveToNext());
         }

@@ -1,16 +1,12 @@
 package cs4330.cs.utep.edu;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.provider.Settings;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +25,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import static android.content.Intent.EXTRA_TEXT;
 
@@ -43,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     DBHelper helper = new DBHelper(this);
     WifiManager wifiManager;
     WifiCheck check = new WifiCheck();
+    String pr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         helper = new DBHelper(this);
         items = (ArrayList<Item>) helper.allItems();
 
-        product.setStartPrice();
+       // product.setStartPrice();
 
         if(savedInstanceState != null){
             items = savedInstanceState.getParcelableArrayList("items");
@@ -74,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
         passLine();
 
 
-       // new Price().execute();
+       // new Price().execute("https://www.homedepot.com/");
+
 
     }
     @Override
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
             if(id == R.id.browse){
-             url = "https://www.bestbuy.com";
+             url = "https://www.walmart.com";
              browse(url);
                 return true;
              }
@@ -154,6 +153,19 @@ public class MainActivity extends AppCompatActivity {
 
                         String i = product.getItem();
                         String u = product.getUrl();
+                        PriceFinder f =new PriceFinder();
+                        f.execute(u);
+                        try {
+                             pr =f.get();
+                             product.setStartPrice(pr);
+
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+
                         addDataToDatabase(i,u);
                         //addDataDisplay();
 
@@ -284,36 +296,62 @@ public class MainActivity extends AppCompatActivity {
 
     public void addDataToDatabase(String name,  String url){
         float start =  product.getStartPrice();
+       // String sStart= Float.toString(start);
+       // Toast.makeText(this,start,Toast.LENGTH_SHORT).show();
         float curr = product.getCurrentPrice();
        // double percent =  product.getPercentageChange();
         boolean in =helper.addItem(name,url,start,curr);
+        String s =Float.toString(product.getStartPrice());
         if(in){
-            Toast.makeText(this,"passed",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"hi",Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
         }
     }
 
-    private class Price extends AsyncTask<Void,Void,Void>{
-        String name =null;
-        String u = "https://www.bestbuy.com/site/canon-eos-rebel-t7i-dslr-camera-with-ef-s-18-55mm-is-stm-lens-black/5792700.p?skuId=5792700";
+    private class PriceFinder extends AsyncTask<String,Void,String> {
+        String mUrl= null;
+        String i = null;
+
+        //    public float findPrice(){
+//        float price = (float) 0.00;
+//        Random r = new Random();
+//        price = (float) ((r.nextInt((int)((500-50)*10+1))+50*10) / 10.0);
+//
+//        float floatingnumber = (float) price;
+//        return floatingnumber;
+//    }
+        public void setPrice(String c){
+            i = c;
+       }
+        public String getPrice(){
+            return i;
+        }
+
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected String doInBackground(String...url) {
             try {
-                // Connect to the web site
-                Document document = Jsoup.connect(u).get();
-                // Get the html document title
-               name = document.title();
+                Document document = Jsoup.connect(url[0]).get();
+                // Elements price = document.select(".priceCurrency");
+                //  w = document.select("div.prod-PriceHero").text();
+                // w = document.select("div.product-offer-price.hf-BotRow").text();
+                // w = document.select("div.prod-ShippingOffer.prod-PositionedRelative.Grid.prod-ProductOffer-enhanced").text();
+                // w= document.select(" price display-inline-block arrange-fit price").text();
+                //  w=document.select("span[class=price display-inline-block arrange-fit price]").text();
+                i = document.select("span[class=display-inline-block-xs prod-PaddingRight--xs valign-top]").text();
+                i = i.replace("$"," ");
+
+                String[] split = i.trim().split("\\s+");
+                split[0].replace(" ","");
+
+                i = split[0];
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void result) {
-            // Set title into TextView
-            Toast.makeText(getApplicationContext(),name,Toast.LENGTH_SHORT).show();
+            return i;
         }
     }
+
 }
