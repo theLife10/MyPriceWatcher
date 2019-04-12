@@ -6,5 +6,7 @@
     <item android:id="@+id/edit"
         android:title="Edit"/>
     <item android:id="@+id/browse"
-        android:title="Browse"/>
+    android:title="Browse"/>
+    <item android:id="@+id/update"
+        android:title="Update"/>
 </menu>

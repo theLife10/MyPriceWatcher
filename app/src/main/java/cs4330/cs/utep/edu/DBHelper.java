@@ -95,19 +95,21 @@ public class DBHelper extends SQLiteOpenHelper {
                 String name = cursor.getString(1);
                 String url = cursor.getString(5);
                 float start = cursor.getFloat(2);
-                Item item = new Item(id, name, url,start);
+                float current = cursor.getFloat(3);
+                Item item = new Item(id, name, url,start,current);
                 watchedPrices.add(item);
             } while (cursor.moveToNext());
         }
         return watchedPrices;
     }
 
-    public void update(Item item) {
+    public void update(float curr,String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, item.getItem());
-        values.put(KEY_URL, item.getUrl());
-        db.update(PRICE_TABLE, values, KEY_ID + " = ?", new String[]{String.valueOf(item.getId())});
+      //  values.put(KEY_NAME, item.getItem());
+      //  values.put(KEY_URL, item.getUrl());
+        values.put(KEY_CURRENTPRICE,curr);
+        db.update(PRICE_TABLE, values, KEY_ID + " = ?", new String[]{id});
         db.close();
     }
 

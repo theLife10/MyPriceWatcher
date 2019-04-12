@@ -21,11 +21,12 @@ public class Item implements Parcelable {
         mStartPrice = (float) 0.00;
         mCurrentPrice = (float) 0.00;
     }
-    public Item(int id,String item, String url,float start) {
+    public Item(int id,String item, String url,float start, float current) {
         mId = id;
         mItem = item;
         mUrl = url;
         mStartPrice=start;
+        mCurrentPrice = current;
    //     findPrice = new PriceFinder();
     }
 
@@ -81,7 +82,7 @@ public class Item implements Parcelable {
 
     }
 
-    public void setCurrentPrice(float p){
+    public void setCurrentPrice(String p){
       //  mCurrentPrice = findPrice.findPrice();
       //  findPrice.execute(getUrl());
       //  String s= findPrice.getPrice();
@@ -89,7 +90,7 @@ public class Item implements Parcelable {
       //  findPrice.execute(url);
      //   String s= findPrice.getPrice();
       //  mCurrentPrice = Float.parseFloat(s);
-        mCurrentPrice = p;
+        mCurrentPrice = Float.parseFloat(p);;
     }
 
     public void setItem(String item) {

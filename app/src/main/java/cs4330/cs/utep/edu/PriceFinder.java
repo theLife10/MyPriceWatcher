@@ -16,7 +16,6 @@ public class PriceFinder extends AsyncTask<String,Void,String> {
     String i = null;
     String w;
     Execute e;
-
     @Override
     protected String doInBackground(String...url) {
         try {
@@ -34,16 +33,13 @@ public class PriceFinder extends AsyncTask<String,Void,String> {
                 i = document.select("span[class=Price-group]").text();
                 w = e.execute(i);
             }
-            if(split[1].equals("homedepot")){
+        //    if(split[1].equals("homedepot")){
 
-            }
+          //  }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         return w;
     }
-
-
-
 }

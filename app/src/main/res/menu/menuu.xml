@@ -13,16 +13,16 @@
         android:title="Update"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/browse"
+        android:id="@+id/sams"
         android:orderInCategory="100"
-        android:title="@string/browse"
+        android:title="Samsclub"
 
         />
+
     <item
-        android:id="@+id/customtabs"
-        android:title="Chrome CustomTabs"
-        android:orderInCategory="101"
+        android:id="@+id/walmart"
+        android:orderInCategory="90"
+        android:title="Walmart"
         />
-
 
 </menu>

@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     WifiManager wifiManager;
     WifiCheck check = new WifiCheck();
     String pr;
+    PriceFinder f =new PriceFinder();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,12 +90,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
-            if(id == R.id.browse){
+            if(id == R.id.sams){
              url = "https://www.samsclub.com";
              browse(url);
                 return true;
              }
-
+             if(id == R.id.walmart){
+                 url = "https://www.walmart.com";
+                 browse(url);
+                 return true;
+             }
             if(id == R.id.add){
                 addDialog();
                 return true;
@@ -103,12 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 listview.setAdapter(adapter);
                 return true;
             }
-            if(id == R.id.customtabs){
-                url = "https://www.bestbuy.com";
-                chromeTabs(url);
-                return true;
-            }
-
 
             return super.onOptionsItemSelected(item);
     }
@@ -148,18 +148,16 @@ public class MainActivity extends AppCompatActivity {
 
                         String i = product.getItem();
                         String u = product.getUrl();
-                        PriceFinder f =new PriceFinder();
+
                         f.execute(u);
                         try {
-                             pr =f.get();
-                             product.setStartPrice(pr);
-
+                            pr =f.get();
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
+                        product.setStartPrice(pr);
 
                         addDataToDatabase(i,u);
                         //addDataDisplay();
@@ -199,6 +197,28 @@ public class MainActivity extends AppCompatActivity {
                 if(item.getItemId() == R.id.remove){
                     removeItem(position);
                     return true;
+                }
+                if(item.getItemId() == R.id.update){
+                    Item it = items.get(position);
+                    int id = it.getId();
+                    String sId = Integer.toString(id);
+
+                    String url = it.getUrl();
+                    f.execute(url);
+
+                    try {
+                        pr =f.get();
+                        Toast.makeText(getApplicationContext(), pr, Toast.LENGTH_SHORT).show();
+                        it.setCurrentPrice(pr);
+                        float curr = it.getCurrentPrice();
+                        helper.update(curr,sId);
+                        adapter.notifyDataSetChanged();
+                        listview.setAdapter(adapter);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 return false;
@@ -241,8 +261,8 @@ public class MainActivity extends AppCompatActivity {
                         String url = diaUrl.getText().toString();
                         item.setItem(name);
                         item.setUrl(url);
-                        helper.update(item);
-                        adapter.notifyDataSetChanged();
+                      //  helper.update(item);
+                      //  adapter.notifyDataSetChanged();
                        // adapter = new ItemAdapter(getApplicationContext(),items);
                         listview.setAdapter(adapter);
                     }
@@ -263,15 +283,6 @@ public class MainActivity extends AppCompatActivity {
        sendUrl.putExtra("url",url);
 
        startActivityForResult(sendUrl,requestcode);
-    }
-    public void chromeTabs(String url){
-        Intent intent = new Intent(this, CustomBroadcastReciever.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
-                .setToolbarColor(Color.BLUE)
-                .addMenuItem("Share via PriceWatcher",pendingIntent);
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(this, Uri.parse(url));
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -304,4 +315,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
         }
     }
+
 }
