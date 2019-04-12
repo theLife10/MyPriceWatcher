@@ -6,7 +6,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +19,6 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -94,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
             if(id == R.id.browse){
-             url = "https://www.walmart.com";
+             url = "https://www.samsclub.com";
              browse(url);
                 return true;
              }
@@ -309,49 +304,4 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
         }
     }
-
-    private class PriceFinder extends AsyncTask<String,Void,String> {
-        String mUrl= null;
-        String i = null;
-
-        //    public float findPrice(){
-//        float price = (float) 0.00;
-//        Random r = new Random();
-//        price = (float) ((r.nextInt((int)((500-50)*10+1))+50*10) / 10.0);
-//
-//        float floatingnumber = (float) price;
-//        return floatingnumber;
-//    }
-        public void setPrice(String c){
-            i = c;
-       }
-        public String getPrice(){
-            return i;
-        }
-
-        @Override
-        protected String doInBackground(String...url) {
-            try {
-                Document document = Jsoup.connect(url[0]).get();
-                // Elements price = document.select(".priceCurrency");
-                //  w = document.select("div.prod-PriceHero").text();
-                // w = document.select("div.product-offer-price.hf-BotRow").text();
-                // w = document.select("div.prod-ShippingOffer.prod-PositionedRelative.Grid.prod-ProductOffer-enhanced").text();
-                // w= document.select(" price display-inline-block arrange-fit price").text();
-                //  w=document.select("span[class=price display-inline-block arrange-fit price]").text();
-                i = document.select("span[class=display-inline-block-xs prod-PaddingRight--xs valign-top]").text();
-                i = i.replace("$"," ");
-
-                String[] split = i.trim().split("\\s+");
-                split[0].replace(" ","");
-
-                i = split[0];
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return i;
-        }
-    }
-
 }
