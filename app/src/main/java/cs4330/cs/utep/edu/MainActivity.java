@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     WifiManager wifiManager;
     WifiCheck check = new WifiCheck();
     String pr;
-    PriceFinder f =new PriceFinder();
+
 
 
     @Override
@@ -148,15 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
                         String i = product.getItem();
                         String u = product.getUrl();
+                        up(product,1);
 
-                        f.execute(u);
-                        try {
-                            pr =f.get();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                         product.setStartPrice(pr);
 
                         addDataToDatabase(i,u);
@@ -199,26 +192,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 if(item.getItemId() == R.id.update){
-                    Item it = items.get(position);
-                    int id = it.getId();
-                    String sId = Integer.toString(id);
-
-                    String url = it.getUrl();
-                    f.execute(url);
-
-                    try {
-                        pr =f.get();
-                        Toast.makeText(getApplicationContext(), pr, Toast.LENGTH_SHORT).show();
-                        it.setCurrentPrice(pr);
-                        float curr = it.getCurrentPrice();
-                        helper.update(curr,sId);
-                        adapter.notifyDataSetChanged();
-                        listview.setAdapter(adapter);
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                        Item it = items.get(position);
+                        up(it,0);
                 }
 
                 return false;
@@ -314,6 +289,40 @@ public class MainActivity extends AppCompatActivity {
         else {
             Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
         }
+    }
+    public void up(Item it,int i){
+        PriceFinder f =new PriceFinder();
+        if(i ==0){
+            String url = it.getUrl();
+            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
+            f.execute(url);
+            try {
+                pr =f.get();
+                it.setCurrentPrice(pr);
+                String id = Integer.toString(it.getId());
+                float curr =it.getCurrentPrice();
+                Toast.makeText(getApplicationContext(), pr, Toast.LENGTH_SHORT).show();
+                helper.update(curr,id);
+                adapter.notifyDataSetChanged();
+                listview.setAdapter(adapter);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }else {
+            String u = it.getUrl();
+            f.execute(u);
+            try {
+                pr =f.get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }
