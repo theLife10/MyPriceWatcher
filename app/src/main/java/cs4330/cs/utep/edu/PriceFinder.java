@@ -16,6 +16,7 @@ public class PriceFinder extends AsyncTask<String,Void,String> {
     String i = null;
     String w;
     Execute e;
+    String cents = null;
     @Override
     protected String doInBackground(String...url) {
         try {
@@ -33,9 +34,16 @@ public class PriceFinder extends AsyncTask<String,Void,String> {
                 i = document.select("span[class=Price-group]").text();
                 w = e.execute(i);
             }
-        //    if(split[1].equals("homedepot")){
-
-          //  }
+            if(split[1].equals("homedepot")){
+               String extractCents =null;
+                e = new Execute(new Homedepot());
+                Document document = Jsoup.connect(url[0]).cookie("_mibhv","anon-1554851458201-9035811486_4577").get();
+                i = document.select("span[class=price__dollars]").text();
+                extractCents = document.select("span[class=price__cents]").text();
+                w = e.execute(i);
+                cents = e.execute(extractCents);
+                return w+"."+cents;
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

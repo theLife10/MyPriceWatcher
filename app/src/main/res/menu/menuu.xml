@@ -24,5 +24,10 @@
         android:orderInCategory="90"
         android:title="Walmart"
         />
+    <item
+        android:id="@+id/homedepot"
+        android:orderInCategory="80"
+        android:title="Homedepot"
+        />
 
 </menu>

@@ -100,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
                  browse(url);
                  return true;
              }
+             if(id == R.id.homedepot){
+                     url = "https://www.homedepot.com";
+                     browse(url);
+                     return true;
+
+             }
             if(id == R.id.add){
                 addDialog();
                 return true;
