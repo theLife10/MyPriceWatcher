@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
                  return true;
              }
              if(id == R.id.homedepot){
-                     url = "https://www.homedepot.com";
-                     browse(url);
-                     return true;
+                 url = "https://www.homedepot.com";
+                 browse(url);
+                 return true;
 
              }
             if(id == R.id.add){
@@ -111,8 +111,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             if(id == R.id.update){
-                adapter.setPercent();
-                listview.setAdapter(adapter);
+               // adapter.setPercent();
+                //listview.setAdapter(adapter);
+
+                int listsize = items.size();
+                for(int i =0; i < listsize; i++){
+                    Item it = items.get(i);
+                    up(it,0);
+                }
                 return true;
             }
 
