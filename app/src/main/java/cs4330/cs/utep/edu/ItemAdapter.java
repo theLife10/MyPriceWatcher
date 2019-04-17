@@ -18,7 +18,6 @@ public class ItemAdapter extends ArrayAdapter<Item>  {
     TextView itemName, currentPrice, priceChange;
     TextView startingPrice;
     Item item;
-    DBHelper helper;
 
     public ItemAdapter( Context context, List<Item> items){
         super(context, 0, items);
@@ -35,27 +34,15 @@ public class ItemAdapter extends ArrayAdapter<Item>  {
             priceChange = (TextView) listItem.findViewById(R.id.percent);
 
         }
-     //   item.setCurrentPrice();
-     //   item.setStartPrice();
-
         item = itemList.get(position);
         itemName.setText(item.getItem());
-        //setting the name
-
         //Setting the starting price
         String start = Float.toString(item.getStartPrice());
         startingPrice.setText("$ "+start);
 
         String current = Float.toString(item.getCurrentPrice());
         currentPrice.setText("$ "+current);
-
-        setPercent();
+        priceChange.setText("% "+Float.toString((float) item.getPercentageChange()));
        return listItem;
     }
-    public void setPercent(){
-     //   item.setCurrentPrice();
-
-        priceChange.setText("% "+Float.toString((float) item.getPercentageChange()));
-    }
-
 }

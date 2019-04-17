@@ -10,14 +10,12 @@ public class Item implements Parcelable {
     private String mItem;
     private float mStartPrice;
     private float mCurrentPrice;
-   // private PriceFinder findPrice;
     private String mUrl;
     private int mId;
 
 
     public Item(){
         mItem = "";
-      //  findPrice = new PriceFinder();
         mStartPrice = (float) 0.00;
         mCurrentPrice = (float) 0.00;
     }
@@ -27,7 +25,6 @@ public class Item implements Parcelable {
         mUrl = url;
         mStartPrice=start;
         mCurrentPrice = current;
-   //     findPrice = new PriceFinder();
     }
 
     protected Item(Parcel in) {
@@ -66,30 +63,10 @@ public class Item implements Parcelable {
     }
 
     public void setStartPrice(String price) {
-     //   mStartPrice = mCurrentPrice = findPrice.findPrice();
-       // String s = findPrice
-//      //  new PriceFinder().execute();
-//        findPrice.execute(getUrl());
-       // String s= findPrice.getPrice();
         mStartPrice = Float.parseFloat(price);
     }
 
-    public void setFindPrice(String url){
-    //    findPrice.execute(url);
-    //    String s= findPrice.getPrice();
-     //   mStartPrice = Float.parseFloat(s);
-//
-
-    }
-
     public void setCurrentPrice(String p){
-      //  mCurrentPrice = findPrice.findPrice();
-      //  findPrice.execute(getUrl());
-      //  String s= findPrice.getPrice();
-      //  mCurrentPrice = Float.parseFloat(s);
-      //  findPrice.execute(url);
-     //   String s= findPrice.getPrice();
-      //  mCurrentPrice = Float.parseFloat(s);
         mCurrentPrice = Float.parseFloat(p);;
     }
 
@@ -112,8 +89,6 @@ public class Item implements Parcelable {
     public double getPercentageChange(){
         return (mStartPrice - mCurrentPrice) / 100;
     }
-
-
 
     @Override
     public int describeContents() {

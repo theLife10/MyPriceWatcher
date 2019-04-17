@@ -5,12 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.customtabs.CustomTabsIntent.KEY_DESCRIPTION;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
@@ -23,7 +19,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_CURRENTPRICE = "current";
     private static final String KEY_URL = "url";
     private static final String KEY_DONE = "done";
-
 
     public DBHelper(Context context){
         super(context,DB_NAME,null,DB_VERSION);
@@ -67,17 +62,6 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    public void deleteAll() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(PRICE_TABLE, null, new String[]{});
-        db.close();
-    }
-    public Cursor getData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + PRICE_TABLE;
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
     public void deleteData(String id){
         SQLiteDatabase db = this.getWritableDatabase();
          db.delete(PRICE_TABLE, KEY_ID +  "=" + id, null) ;
@@ -106,12 +90,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void update(float curr,String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-      //  values.put(KEY_NAME, item.getItem());
-      //  values.put(KEY_URL, item.getUrl());
         values.put(KEY_CURRENTPRICE,curr);
         db.update(PRICE_TABLE, values, KEY_ID + " = ?", new String[]{id});
         db.close();
     }
-
-
 }

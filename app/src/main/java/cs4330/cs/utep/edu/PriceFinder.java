@@ -1,22 +1,14 @@
 package cs4330.cs.utep.edu;
-
 import android.os.AsyncTask;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Random;
 
 public class PriceFinder extends AsyncTask<String,Void,String> {
-    String mUrl= null;
-    String i = null;
-    String w;
-    Execute e;
-    String cents = null;
+    private String i = null;
+    private String w;
+    private Execute e;
+    private String cents = null;
     @Override
     protected String doInBackground(String...url) {
         try {

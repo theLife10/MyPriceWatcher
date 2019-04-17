@@ -1,12 +1,8 @@
 package cs4330.cs.utep.edu;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,8 +13,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -27,17 +21,14 @@ import static android.content.Intent.EXTRA_TEXT;
 public class MainActivity extends AppCompatActivity {
     private ListView listview;
     ItemAdapter adapter;
-    EditText diaName,diaPrice,diaUrl;
+    EditText diaName,diaUrl;
     String url;
     Item product = new Item();
     ArrayList<Item> items ;
     int requestcode = 0;
     DBHelper helper = new DBHelper(this);
-    WifiManager wifiManager;
     WifiCheck check = new WifiCheck();
     String pr;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         helper = new DBHelper(this);
         items = (ArrayList<Item>) helper.allItems();
-
-       // product.setStartPrice();
 
         if(savedInstanceState != null){
             items = savedInstanceState.getParcelableArrayList("items");
@@ -64,14 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 popup(view,position);
             }
         });
-       // check = new WifiCheck();
-      //  check.checkForWifi();
         passLine();
-
-
-       // new Price().execute("https://www.homedepot.com/");
-
-
     }
     @Override
     protected void onStart() {
@@ -111,9 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             if(id == R.id.update){
-               // adapter.setPercent();
-                //listview.setAdapter(adapter);
-
                 int listsize = items.size();
                 for(int i =0; i < listsize; i++){
                     Item it = items.get(i);
@@ -131,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         String type = getIntent().getType();
         if (Intent.ACTION_SEND.equalsIgnoreCase(action) && type != null && ("text/plain".equals(type))) {
             url = getIntent().getStringExtra(EXTRA_TEXT);
-            //send to dialog
             addDialog();
             diaUrl.setText(url);
 
@@ -152,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         String name = diaName.getText().toString();
                         String url = diaUrl.getText().toString();
                         product.setItem(name);
@@ -165,10 +142,9 @@ public class MainActivity extends AppCompatActivity {
                         product.setStartPrice(pr);
 
                         addDataToDatabase(i,u);
-                        //addDataDisplay();
 
                         items.add(product);
-                      //  adapter.notifyDataSetChanged();
+
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -191,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.edit){
-                    // createDialog();
+
                     editDialog(position);
                 }
                 if(item.getItemId() == R.id.browse){
@@ -248,9 +224,6 @@ public class MainActivity extends AppCompatActivity {
                         String url = diaUrl.getText().toString();
                         item.setItem(name);
                         item.setUrl(url);
-                      //  helper.update(item);
-                      //  adapter.notifyDataSetChanged();
-                       // adapter = new ItemAdapter(getApplicationContext(),items);
                         listview.setAdapter(adapter);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -276,7 +249,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         String returnedUrl = data.getData().toString();
         if(resultCode == 0) {
-            Toast.makeText(this, returnedUrl, Toast.LENGTH_SHORT).show();
             addDialog();
             diaUrl.setText(returnedUrl);
         }
@@ -289,31 +261,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void addDataToDatabase(String name,  String url){
         float start =  product.getStartPrice();
-       // String sStart= Float.toString(start);
-       // Toast.makeText(this,start,Toast.LENGTH_SHORT).show();
+
         float curr = product.getCurrentPrice();
-       // double percent =  product.getPercentageChange();
+
         boolean in =helper.addItem(name,url,start,curr);
         String s =Float.toString(product.getStartPrice());
-        if(in){
-            Toast.makeText(this,"hi",Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(this,"fail",Toast.LENGTH_SHORT).show();
-        }
     }
     public void up(Item it,int i){
         PriceFinder f =new PriceFinder();
         if(i ==0){
             String url = it.getUrl();
-            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
             f.execute(url);
             try {
                 pr =f.get();
                 it.setCurrentPrice(pr);
                 String id = Integer.toString(it.getId());
                 float curr =it.getCurrentPrice();
-                Toast.makeText(getApplicationContext(), pr, Toast.LENGTH_SHORT).show();
                 helper.update(curr,id);
                 adapter.notifyDataSetChanged();
                 listview.setAdapter(adapter);

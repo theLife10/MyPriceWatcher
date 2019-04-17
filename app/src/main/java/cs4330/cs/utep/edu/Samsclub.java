@@ -5,11 +5,8 @@ public class Samsclub implements Store {
     public String filter(String i) {
         i = i.replace("current price: ","");
         i = i.replace("$"," ");
-
         String[] split = i.trim().split("\\s+");
-
         i=split[0].replace(" ","");
-
         return i;
     }
 }
