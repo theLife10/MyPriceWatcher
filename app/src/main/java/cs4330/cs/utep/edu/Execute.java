@@ -1,7 +1,7 @@
 package cs4330.cs.utep.edu;
 
 public class Execute {
-    Store store ;
+    private Store store ;
 
     public Execute(Store s){
         store = s;

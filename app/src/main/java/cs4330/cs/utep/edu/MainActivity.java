@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -132,18 +134,25 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String name = diaName.getText().toString();
                         String url = diaUrl.getText().toString();
-                        product.setItem(name);
-                        product.setUrl(url);
 
-                        String i = product.getItem();
-                        String u = product.getUrl();
-                        up(product,1);
+                        if(url.contains("homedepot") ||url.contains("samsclub") || url.contains("walmart")) {
+                            product.setItem(name);
+                            product.setUrl(url);
 
-                        product.setStartPrice(pr);
+                            String i = product.getItem();
+                            String u = product.getUrl();
+                            up(product,1);
 
-                        addDataToDatabase(i,u);
+                            product.setStartPrice(pr);
 
-                        items.add(product);
+                            addDataToDatabase(i,u);
+
+                            items.add(product);
+                        }else {
+                            Toast.makeText(getApplicationContext(),"url malformed",Toast.LENGTH_SHORT).show();
+                        }
+
+
 
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -271,30 +280,37 @@ public class MainActivity extends AppCompatActivity {
         PriceFinder f =new PriceFinder();
         if(i ==0){
             String url = it.getUrl();
-            f.execute(url);
-            try {
-                pr =f.get();
-                it.setCurrentPrice(pr);
-                String id = Integer.toString(it.getId());
-                float curr =it.getCurrentPrice();
-                helper.update(curr,id);
-                adapter.notifyDataSetChanged();
-                listview.setAdapter(adapter);
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(url.contains("homedepot") ||url.contains("samsclub") || url.contains("walmart")) {
+                f.execute(url);
+
+                try {
+                    pr =f.get();
+                    it.setCurrentPrice(pr);
+                    String id = Integer.toString(it.getId());
+                    float curr =it.getCurrentPrice();
+                    helper.update(curr,id);
+                    adapter.notifyDataSetChanged();
+                    listview.setAdapter(adapter);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
         }else {
+            Toast.makeText(this,"hi",Toast.LENGTH_SHORT).show();
             String u = it.getUrl();
-            f.execute(u);
-            try {
-                pr =f.get();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(u.contains("homedepot") ||u.contains("samsclub") || u.contains("walmart")) {
+                f.execute(u);
+
+                try {
+                    pr = f.get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
