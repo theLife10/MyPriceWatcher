@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -299,7 +298,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }else {
-            Toast.makeText(this,"hi",Toast.LENGTH_SHORT).show();
             String u = it.getUrl();
             if(u.contains("homedepot") ||u.contains("samsclub") || u.contains("walmart")) {
                 f.execute(u);
